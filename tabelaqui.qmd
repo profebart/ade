@@ -1,0 +1,6 @@
+---
+title: "Tabela Qui-quadrado"
+author: "Eric Bartulici"
+---
+
+Tabela Qui-quadrado

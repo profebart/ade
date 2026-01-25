@@ -1,0 +1,37 @@
+---
+title: "Matrizes"
+author: "Eric Bartulici"
+---
+
+# Atenção: EM DESENVOLVIMENTO
+
+## Comando Solve
+
+Imagine que queira solucionar a expressão linear y = 34\*x = 680. Com o comando solve, temos:
+
+```{r}
+#library(solve)
+solve(34, 680)
+```
+
+Pode ser resolvido igualmente pelo comando matrix para resolver sistemas de equações. Imagine que desej-ase resolver o sistema de equações: $$ 10X + 2Y = 30 $$
+
+e
+
+$$ 20X + 6Y = 18 $$ Pelo comando matrix, precisamos criar o lado esquerdo da equação linear (left-handed side - LHS) e também o lado direito (rigth- handed side - RHS), assim, temos:
+
+```{r}
+# LHS:
+lhs<- matrix(c(10, 20,
+                2, 6), nrow = 2)
+lhs
+# RHS
+rhs<- matrix(c(15, 9),nrow = 2)
+rhs
+```
+
+Para resolver, utiliza-se o comando solve novamente:
+
+```{r}
+solve(lhs, rhs)
+```

@@ -1,0 +1,6 @@
+---
+title: "Tabela t de Student"
+author: "Eric Bartulici"
+---
+
+Tabela t de Strudent

@@ -1,0 +1,99 @@
+---
+title: "Funções Lineares"
+author: "Eric Bartulici"
+---
+
+# Atenção: EM DESENVOLVIMENTO
+
+```{r}
+f<-function(x){(-3/2)*x -(5/2)} 
+g<-function(x){(1/2)*x +7/2} 
+plot(f, -5, 5, lwd=3, col="blue", ylab = "Y") 
+plot(g, -5,5, lwd=3, col="red", add=T)
+```
+
+############################################################################### 
+
+## Lista de exercícios
+
+### Exercício 01
+
+```{r}
+Pv = 100 
+Q = 12000 
+Cf=120000 
+Cvu = 60
+```
+
+a)  Cálculo do Lucro
+
+L = Receita total - Custo total
+
+```{r}
+L = (Pv - Cvu)*Q - Cf 
+L
+
+```
+
+b)  Quantidade de equilíbrio
+
+```{r}
+M1 = Pv - Cvu 
+M1
+Qeq = Cf / M1 
+Qeq
+```
+
+Testando se o Qeq está correto: nele o L=0
+
+```{r}
+Leq = (Pv - Cvu)*Qeq - Cf 
+Leq
+```
+
+c)  Cf1 = L - M1\*Q
+
+```{r}
+L1 = 400000 
+Cf1 = M1*Q - L1 
+Cf1
+```
+
+d)  Redução de 5% do Cf
+
+```{r}
+
+Cf2 = 0.95*Cf 
+Cf2 
+L2 = (Pv - Cvu)*Q - Cf2 
+L2
+```
+
+e)  Redução de 5% do Cv
+
+```{r}
+
+Cv1 = 0.95*(Cvu*Q) 
+Cv1 
+L3 = Pv*Q - (Cv1 + Cf) 
+L3
+```
+
+Plotando as retas dos componentes CVL
+
+Equação da Receita
+
+RT = Pv\*Q
+
+```{r}
+fRT<-function(Q){Pv*Q} 
+plot(fRT, 0, 12000, lwd=3, col="blue", ylab = "$$$")
+
+fCT<- function(Q){Cvu*Q +Cf} 
+plot(fCT, 0, 12000, lwd=3, col="red",add=T) 
+abline(h=120000)
+
+fL<- function(Q){(Pv-Cvu)*Q - Cf} 
+plot(fL, 0, 12000, lwd=3, col="black",add=T)
+
+```

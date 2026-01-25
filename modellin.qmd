@@ -1,0 +1,6 @@
+---
+title: "Modelamento Linear"
+author: "Eric Bartulici"
+---
+
+# Atenção: EM DESENVOLVIMENTO

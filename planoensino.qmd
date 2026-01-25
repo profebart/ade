@@ -1,0 +1,64 @@
+---
+title: "Plano de Ensino"
+author: "Eric Bartulici"
+---
+
+# Disciplina: "Análise de Dados em Engenharia"
+
+-   Carga Horária: 64 h.a.
+
+-   Tipo: Optativa
+
+# Ementa da Disciplina
+
+1.  Introdução à Análise de Dados em Engenharia.
+
+2.  A linguagem R aplicada à problemas de engenharia.
+
+3.  Análise exploratória de dados - estimativas de tend\~encia central e de variabilidade.
+
+4.  Distribuição de probabilidades em linguagem R (Normal, t de Student, Quí-quadrado, F de Snedcor).
+
+5.  Correlação e covariância.
+
+6.  Amostragem, reamostragem, Bootstrap.
+
+7.  Intervalos estatísticos para médias, proporções e variãncias.
+
+8.  Análises gráficas e aplicações diversas.
+
+## Objetivos Gerais
+
+-   Introduzir os estudantes no campo da aplicação de técnicas estatísticas e análise de dados de engenharia.
+
+-   Utilizar ferramentas computacionais para a solução de problemas típicos do dia-a-dia do engenheiro de desenvolvimento de processos e de produtos, como meio de habilitar o estudante a analisar e resolver problemas com velocidade e precisão.
+
+-   Habilitar o estudante a gerenciar os processos e desenvolver os produtos sobre a ótica da capacidade e da variabilidade de parâmetros de projeto e de produção, bem como quantificar a variabilidade, distribuição e inferir sobre os parâmetros estatisticamente, escolhendo corretamente quais métodos são disponíveis para esta atividade.
+
+## Objetivos Específicos
+
+-   Apresentar o software RStudio e a linguagem R como ferramenta adequada e potente para a soução de diversos problemas em engenharia.
+
+-   Aplicar a estatística e os métodos matemáticos para inferir sobre processos, elaborando relatórios e gráficos sobre os dados analisados.
+
+-   Identificar os limites dos testes paramétricos de dados e as possíveis soluções para modelos não-paramétricos típicos na engenharia.
+
+## Bibliografia Básica
+
+1.  MORETTIN, Pedro Alberto; BUSSAB, Wilton de Oliveira. Estatística básica. 7ª edição. São Paulo. Saraiva, 2012. 540 p.
+
+2.  BRUNI, Adriano Leal. Estatística aplicada à gestão empresarial. 3ª edição. São Paulo: Atlas, 2011. 398 p.
+
+3.  BUENO, Fabrício. Estatística para processos produtivos. Florianópolis: Visual Books, 2010. 121 p.
+
+## Bibliografia Complementar
+
+1.  MONTGOMERY, Douglas C.; RUNGER, George C. Estatística aplicada e probabilidade para engenheiros. 5. ed. Rio de Janeiro: LTC, 2012. 521 p.
+
+2.  CECON, Paulo Roberto \[et al\]. Métodos Estatísticos.Viçosa: Ed. UFV, 2012. 229p.
+
+3.  BEKMAN, Otto Ruprecht, COSTA NETO, Pedro Luiz de Oliveira. Análise Estatística da decisão. 2. Ed. São Paulo: Blucher,2009. 148p.
+
+4.  NEUFELD, John L. Estatística aplicada à administração usando Excel. São Paulo: Person Prentice Hall. 2003.
+
+5.  SMAILES, Joanne, MCGRANE, Angela. Estatística Aplicada à Administração com Excel. Tradução Bazán tecnologia e linguística, Christiane Brito. São Paulo: Atlas, 2002. 321p.

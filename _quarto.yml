@@ -1,0 +1,83 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Ebart Academy (Em desenvolvimento!)"
+  back-to-top-navigation: true
+  navbar: 
+    search: true
+    right: 
+      - text: Autor
+        href: autor.qmd
+      - text: Contato
+        href: contato.qmd
+  sidebar:
+    style: "docked"
+    tools: 
+      - icon: linkedin
+        href: https://linkedin.com
+      - icon: youtube
+        href: https://www.youtube.com/@ebartacademy7018
+    search: true
+    contents:
+      - text: Home
+        href: index.qmd 
+      - section: "Use o R"
+        contents:
+          - text: "Introdução ao RStudio"
+            href: Praticando_R.qmd
+      - section: "Análise de Dados em Engenharia"
+        contents:
+          - text: "Plano de Ensino"
+            href: planoensino.qmd
+          - text: "Análise Exploratória de Dados"
+            href: aed.qmd
+          - text: "Estatística Básica na Linguagem R"
+            href: statr.qmd
+          - text: "Normalidade dos Dados"
+            href: normalidade.qmd
+          - text: "Intervalos Estatísticos"
+            href: intervalos.qmd
+          - text: "Testes Estatísticos"
+            href: testes_stat.qmd          
+          - text: "Exercícios Propostos" 
+            href: exercicios.qmd
+      - section: "Métodos Quantitativos"
+        contents:
+          - text: "Programação Linear" 
+            href: funlinear.qmd
+          - text: "Matrizes"
+            href: matriz_po.qmd
+          - text: "Modelamento Linear"
+            href: modellin.qmd
+          - text: "Regressão Linear Simples"
+            href: rls.qmd
+          - text: "Regressão Linear Múltipla"
+            href: rlm.qmd
+          - text: "Método Simplex"
+            href: simplex.qmd
+      - section: "Materiais Complementares"
+        contents:
+          - text: "Artigos" 
+            href: artigos.qmd
+      - section: "Anexos"
+        contents:
+          - text: "Tabela Z" 
+            href: tabelaz.qmd
+          - text: "Tabela t de Student" 
+            href: tabelat.qmd
+          - text: "Tabela Qui-quadrado" 
+            href: tabelaqui.qmd
+          - text: "Tabela F de Snedecor" 
+            href: tabelaf.qmd
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+editor: visual
+

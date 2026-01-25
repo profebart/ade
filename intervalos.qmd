@@ -1,0 +1,519 @@
+---
+title: "Estimação de Parâmetros"
+author: "Eric Bartulici"
+---
+
+# Introdução
+
+A inferência estatística consiste em fornecer aos analistas uma visão ou estimação de parãmetros para a tomada de decisão sobre uma determinada população. Essa estimação pode ser de dois tipos básicos:
+
+-   Estimativa pontual.
+-   Estimativa Intervalar.
+
+A **estimativa pontual** de parâmetros é aquela que nos fornece estatísticas sobre uma determinada variável de interesse de uma população, como média por exemplo, e fornece um valor que não aborda a incerteza de sua estimação. Quando o **erro de estimação** é considerado, assume-se então uma **estimativa intervalar**, ou seja:
+
+Estimativa Intervalar = Estimativa Pontual + Erro de Estimação
+
+Vejamos um exemplo:
+
+-   Variável de interesse: condutividade tŕmica de um metal (em BTU/hr-ft-ºF).
+-   Amostragem de algumas resistências forneceram os seguintes valores:
+
+```{r}
+condut<-c(41.60, 41.48, 42.34, 41.95, 41.86,
+          42.18, 41.72, 42.26, 41.81, 42.04)
+media_condut<-mean(condut)
+cat(" A condutividade média do metal é de :", media_condut, "BTU/hr-ft-ºF")
+```
+
+A estimativa do desvio-padrão amostral é:
+
+```{r}
+s_condut<-sd(condut)
+cat("O desvio-padrão da condutividade é igual a ", s_condut, "BTU/hr-ft-ºF")
+```
+
+Assim, o erro-padrão amostral estimado é igual a: $$ Erro-padrão = \frac{\sigma}{\sqrt n} $$
+
+```{r}
+erro_pad<- s_condut/sqrt(length(condut))
+cat("O erro-padrão amostral é igual a ", erro_pad, "BTU/hr-ft-ºF")
+```
+
+É importante notar que o erro-padrão é apenas cerca de 0,2% da média de condutividade, podendo ser determinado por:
+
+```{r}
+cat("Percentual do erro-padrão = ",100*erro_pad/media_condut, "%")
+```
+
+Para realizar a estimativa intervalar, é necessário recorrer ao teorema central do limite, pois a média é uma variável aleatória.
+
+$$ Z = \frac{\bar{x} - \mu}{erro-padrão} $$ Assim,
+
+$$ Z = \frac{\bar{x} - \mu}{\frac{\sigma}{\sqrt n}}$$
+
+A curva normal padrão fornece as áreas relativas a uma distribuição com média centrada em seu valor $\mu$ (média populacional) e desvio-padrão $\sigma$, tal que, para um intervalo de confiança de 95%, há um nível de significância de 5%, dividido em duas caudas com 2,5% cada uma. Assim, cahmamos a estimativa intervalar de "**Intervalo de Confiança - IC**". Assim:
+
+```{r, qnorm3}
+x<-seq(-3, 3, by = .01)
+y<-dnorm(x, mean=0, sd=1, log = FALSE)
+qnorm(0.025,0,1) ; qnorm(0.975,0,1)
+rx<-seq(-1.96, 1.96, by=.1)
+ry<-numeric(2*length(rx))
+ry[1:length(rx)]<-dnorm(rx, mean=0, sd=1, log = FALSE)
+rx<-c(rx, rev(rx))
+plot(x, y, 'l', xlab='Curva Normal Padrão', ylab='fdp(x)',
+     main = "Curva Normal Padrão", col="black")
+polygon(rx, ry, col = 'blue')
+abline(v=0, h=0, lty=3)
+text(-2.5,0.1,"2,5%")
+text(2.5,0.1,"2,5%")
+text(0,0.12,"95%", col="white")
+mtext("Área nas caudas: 5%", adj = 0.5)
+```
+
+Os valores Z que delimitam ambas as caudas podem ser encontrados pelo comando qnorm, tal que:
+
+-   Cauda inferior:
+
+```{r}
+qnorm(0.025, mean=0, sd=1)
+```
+
+-   Cauda superior:
+
+```{r}
+qnorm(0.025, mean=0, sd=1, lower.tail = FALSE)
+```
+
+A estimativa intervalar ou IC pode ser estimada em duas situações: - o desvio-padrão populacional $\sigma$ é **conhecido**. - o desvio-padrão populacional $\sigma$ é **desconhecido**.
+
+Quando $\sigma$ é conhecido, utiliza-se a distribuição normal Z para calcular o IC, tal que:
+
+$$ IC^{95} = \bar{x} \pm Z_ \frac{\alpha}{2}.\frac{\sigma}{\sqrt n}  $$
+
+No caso em que $\sigma$ é desconhecido, utiliza-se a distribuição t de student, tal que o IC é calculado por:
+
+$$ IC^{95} = \bar{x} \pm t_ {(n-1);\alpha/2}.\frac{s}{\sqrt n}$$ onde s é o desvio-padrão amostral e t(n-1);$\alpha$/2 é o valor da distribuição de t de student para (n-1) graus de liberdade.
+
+Analogamente ao que foi determinado para o valor de Z anteriormente, determinamos o valor de t de student da seguinte forma:
+
+```{r}
+t<-qt(0.025, df=9, lower.tail = FALSE)
+t
+```
+
+No exemplo da condutividade metálica anterior, temos uma amostra de tamanho 10 (n=10) e portanto, utiliza-se a distribuição t para realizar o cálculo do IC (95%). Assim:
+
+```{r}
+n<- length(condut)
+IC_inferior<- mean(condut)-(t*erro_pad)
+IC_superior<- mean(condut)+(t*erro_pad)
+IC_condut<-c(IC_inferior, IC_superior)
+IC_condut
+```
+
+Portanto, a condutividade média do condutor metálico (com estimativa pontual de 41,924 BTU/hr-ft-ºF) está presente no IC de \[41.72076; 42.12724\] para um IC de 95%.
+
+::: callout-note
+Quando o tamanho da amostra "n" for maior do que 30 (amostras grandes), pode ser utilizado a distribuição normal em lugar da distribuição t. Em amostras com n igual ou menor que 30, recomenda-se a utilização da distribuição t de student, de forma a ter uma análise mais conservadora.
+:::
+
+## Comando "**t.test**" para IC's
+
+Para evitar utilizar as fórmulas de cálculo, podemos sutilizar alternativamente um comando rápido, o "t.test", que roda o teste t de student conforme calculamos acima. Para a estimativa pontual, basta digitar:
+
+```{r}
+t.test(condut)$estimate   #Estimativa pontual
+
+```
+
+Para a estimativa intervalar, basta digitar:
+
+```{r}
+t.test(condut,conf.level=0.95)$conf.int  #Intervalo de Confiança
+```
+
+## Analise da suposição de normalidade
+
+```{r}
+boxplot(condut)
+```
+
+```{r}
+qqnorm(condut); qqline(condut)
+```
+
+## Testes de Shapiro-Wilk:
+
+**Teste de Shapiro-Wilk**
+
+*H0*: os dados vieram de uma distribuição que segue o modelo Normal
+
+*HA*: os dados não vieram de uma distribuição que segue o modelo Normal
+
+```{r}
+shapiro.test(condut)
+```
+
+Com base nos testes acima, não há evidências contra a suposição de normalidade dos dados, não rejeitando-se a Ho (valor-p igual a 0.9216\> nível de significância 0.05).
+
+Exemplo 01
+
+Os dados a seguir são relativos à força (em libras) necessária para se extrair um conector usado em fabricação de motores. Pede-se:
+
+Dados:
+
+```{r}
+f_extract<-c(79.3, 75.1, 78.2, 74.1, 73.9, 75.0, 77.6, 77.3, 73.8, 
+             74.6, 75.5, 74.0, 74.7, 75.9, 72.9, 73.8, 74.2, 78.1,
+             75.4, 76.3, 75.3, 76.2, 74.9, 78.0, 75.1, 76.8)
+```
+
+a)  Determine a estimativa pontual da força de extração do conector.
+
+```{r}
+f_media<-mean(f_extract)
+cat("A força de extração média do conector é de",f_media, "libras")
+```
+
+b)  Determine o valor da força que separa os 50% maiores esforços dos outros 50% menores.
+
+O valor que separa 50% dos dados é a mediana. Assim:
+
+```{r}
+mediana<-median(f_extract)
+cat(" O valor que separa 50% dos dados à esquerda e à direita é:", mediana, "libras")
+```
+
+c)  Determine as estimativas pontuais do desvio-padrão e variância dos dados de força de extração do conector.
+
+-   Desvio-padrão:
+
+```{r}
+dp_f<-sd(f_extract)
+cat("O desvio-padrão da força de extração do conector é de", dp_f, "libras")
+```
+
+-   Variância:
+
+```{r}
+variancia<-var(f_extract)
+cat("A variância da força de extração do conector é de", variancia, "libras")
+```
+
+d)  Determine a estimativa pontual do erro-padrão da força de extração do conector.
+
+-   Erro-padrão:
+
+```{r}
+erro_pad<- sd(f_extract)/sqrt(length(f_extract))
+cat("O erro-padrão amostral é igual a ", erro_pad, "Libras")
+```
+
+e)  Determine uma estimativa pontual da proporção de conectores que limita a força em 73 libras.
+
+Para isso deve ser determinado o valor da estimativa do teste t, que fornecerá o valor para o qual se associa 73 libras na distribuição t.
+
+O teste t, define-se por:
+
+$$ T = \frac{\bar{x} - \mu}{\frac{s}{\sqrt n}}$$
+
+Assim,
+
+$$ T = \frac{73 - 75,61}{\frac{1,65}{\sqrt 26}}= -2,61$$ Assim, o valor da proporção de conectores que não superam 73 libras de força é de:
+
+```{r}
+p73<-pt(-2.61, df=25)
+cat("Cerca de", 100*p73, "% dos conectores terão força de extração menor que 73 libras.")
+```
+
+```{r, qnorm}
+# Determinar o quantil para uma área igual a 5% na curva normal, unicaudal inferior.
+q<-qnorm(0.007539, mean = 0, sd = 1)
+z <- seq(-3,3,0.01)
+pd <- dnorm(z)
+plot(z,pd,type="l", main="Força de Extração < 73 Libras")
+polygon(c(z[z<=q],q),c(pd[z<=q],pd[z==-3]),col="red")
+abline(v=60, h=0, lty=2)
+text(-2.7,0.05,"0,75%")
+mtext("z=-2,61")
+```
+
+Exemplo 02
+
+Para o exercício 01, faça uma estimativa intervalar da força de extração do conector, considerando um IC de 95%, das seguintes formas:
+
+a)  Aplique a fórmula de determinação do IC requerido.
+
+-   Encontrando o tamanho da amostra:
+
+```{r}
+n_ex02<-length(f_extract)
+cat("O tamanho da amostra é de", n_ex02, "unidades.")
+```
+
+-   Determinando o erro-padrão:
+
+```{r}
+erro_pad_ex02<- sd(f_extract)/sqrt(n_ex02)
+cat("O erro-padrão amostral é igual a ", erro_pad_ex02, "Libras")
+```
+
+-   Determinando o IC(95%):
+
+```{r}
+t2<-qt(0.025, df=(n_ex02-1), lower.tail = FALSE)
+t2
+IC_inferior<- mean(f_extract)-(t2*erro_pad_ex02)
+IC_superior<- mean(f_extract)+(t2*erro_pad_ex02)
+IC_condut<-c(IC_inferior, IC_superior)
+IC_condut
+```
+
+b)  Utilize o comando t.test para conferir suas contas.
+
+```{r}
+t.test(f_extract)
+```
+
+c)  Utilize agora um IC de 90%. Explique o que ocorreu com o IC determinado comparado ao anterior (letra b).
+
+```{r}
+t.test(f_extract, conf.level=0.90)
+```
+
+A amplitude do IC(90%) é de (76.17-75.06 = 1.11), enquanto a amplitude do IC (95%) é de (76.28 - 74.95 = 1,33), uma variação de (1,33 - 1,11 = 0,22) a menor.
+
+```{r}
+t<-qt(0.025, df=9, lower.tail = FALSE)
+t
+
+df2<-n_ex02-1
+df2
+
+t2<-qt(0.05, df=25, lower.tail = FALSE)
+t2
+
+```
+
+Lembrando que:
+
+$$ IC^{95} = \bar{x} \pm t_ {(n-1);\alpha/2}.\frac{s}{\sqrt n}$$
+
+Por isso ocorre que o valor de IC(90%) é mais "rigoroso", pois o valor de t do teste é menor (1,71 contra 2,26). Isso significa que quando se deseja maior "confiança" no teste, obviamente a faixa de possíveis valores para a estatística deve aumentar (maior a amplitude para um determinado valor da estimativa cair na faixa considerada!).
+
+d)  Determine o erro de estimativa para os IC's de 90% e 95%.
+
+O Erro de estimativa $\epsilon$ é dado por:
+
+$$ \epsilon = t_ {(n-1);\alpha/2}.\frac{s}{\sqrt n}$$ Assim, os erros de cada IC podem ser determinados:
+
+-   IC 95%:
+
+```{r}
+t95<-qt(0.025, df=25, lower.tail=FALSE)
+erro95<-t95*sd(f_extract)/sqrt(length(f_extract))
+cat("O erro de estimativa para IC de 95% é de", erro95)
+```
+
+-   IC 90%:
+
+```{r}
+t90<-qt(0.05, df=25, lower.tail=FALSE)
+erro90<-t90*sd(f_extract)/sqrt(length(f_extract))
+cat("O erro de estimativa para IC de 95% é de", erro90)
+```
+
+::: callout-note
+Note que o erro de estimativa é a metade da amplitude da faixa de variação do IC em cada caso.
+:::
+
+## Interpretação do IC
+
+Podemos interpretar o valor do IC que temos uma "confiança de x%" de que esse intervalo em especial contenha o valor desconhecido da média populacional $\mu$. Na imagem abaixo, para m=100 amostras de tamanho (n=3) cada uma, em 5 amostras m não foi encontrado o valor médio da população ($\mu$=200), destacados em pontos vermelhos. Esse seria o IC de 95%:
+
+![](imagens/ic95.png){fig-align="center"}
+
+Se tomarmos IC de 90%, teríamos 10 amostras que não conteriam o valor real da média populacional, ou seja, à medida que diminui o IC maior o número de vezes em que a amostra não contrá o valor esperado da média populacional.
+
+## Intervalo de Confiança para Proporções
+
+Segundo o Teorema Central do Limite para proporções, define-se que:
+
+$$ Z = \frac{\bar{p} - p}{{\sqrt {(p(1-p) / n)}}}$$ o IC para proporções pode assim ser definido como:
+
+$$ IC = \hat{p} \pm Z_ \frac{\alpha}{2}.\sqrt {\hat{p}(1-\hat{p}) / n)}  $$
+
+A proporção $\hat{p}$ é determinada pela relação a quantidade de interesse e o tamanho da amostra.
+
+Exemplo 03
+
+Uma amostra de 85 rolamentos de virabrequim gerou a informação de que 10 deles estavam com excesso de rugosidade superficial. qual seria o intervalo de confiança de 95% para essa produção de rolamentos?
+
+-   Determinação da proporção de defeituosos:
+
+$\hat{p}$= 10/85 = 0,12 ou 12% com excesso de rugosidade.
+
+Assim,
+
+$$ IC^{95} = \hat{p} \pm Z_ \frac{\alpha}{2}.\sqrt {\hat{p}(1-\hat{p}) / n)}  $$ Sabendo que o valor da estatística $Z \frac{\alpha}{2}$ para IC de 95% é igual a:
+
+```{r}
+z95<-qnorm(0.025, mean=0, sd=1, lower.tail=FALSE)
+z95
+```
+
+temos:
+
+$$ IC^{95} = 0.12 \pm 1.959964.\sqrt {0.12(1-0.12) / 85)} $$ O IC resultante fornece o intervalo de \[0.05; 0.19\] % de proporção de peças com rugosidades em excesso.
+
+**Exemplo 04**
+
+Determine para o exercício 03 anterior:
+
+a)  o desvio-padrão para a proporção de peças analisadas.
+
+Pode ser encontrado por: $$ DP = \sqrt{\hat{p}(1-\hat{p})/n}$$
+
+Assim, o DP é de:
+
+$$ DP = \sqrt{0.12(1-0.12) / 85)} = 0.035 $$
+
+b)  o Erro de estimativa.
+
+O erro de estimativa $\epsilon$ é de:
+
+$$\epsilon= Z_{\frac{\alpha}{2}}.DP$$ $$\epsilon= 1.959964*0.035 = 0,069$$ Usando o script do R:
+
+```{r}
+DP<-0.035
+erro3<- qnorm(0.025, mean=0, sd=1, lower.tail=FALSE)*DP
+cat("O erro de estimação para a proporção é de", erro3)
+```
+
+## Tamanho da amostra para proporções
+
+Ao explicitarmos o valor de n na equação do erro de estimativa, obtemos:
+
+$$ n = (Z_{{\frac{\alpha}{2}}/{E}})^2 . \hat{p}(1-\hat{p})$$
+
+Se fosse desejado obter um erro de estimativa máximo de 5% para o exemplo 03, o tamanho da amostra mínima n para esse erro seria de:
+
+$$ n = (1.96/0.05)^2 . 0.12(1-0.12)= 162,3 $$ Seriam necessárias 163 amostras para detectar um erro máximo de 5%, ou erro de 0.05. O iC para este caso seria de :
+
+-   Limite Inferior: 0.12 - 0.05 = 0.07
+-   Limite superior: 0.12 + 0.05 = 0.17
+
+## Tamanho de amostra para dados normais
+
+De uma maneira geral, o tamanho de amostra para médias de uma população que segue a distribuição normal pode ser determinada por:
+
+$$ n = (Z_{\frac{\alpha}{2}}.{\sigma}/E)^2$$ **Exemplo 05**
+
+Considere um teste Charpy para determinar a capacidade de absorção de energia de impacto de um produto metálico testado em laboratório. Os resultados dos testes de impacto de 10 amostras estão fornecidos abaixo. Determinar:
+
+Dados:
+
+```{r}
+charpy<-c( 64.1, 64.7, 64.5, 64.6, 64.5, 64.3, 64.6, 64.8, 64.2, 64.3)
+```
+
+a)  o iC de 95% para o teste de impacto, considerando a distribuição t.
+
+Sabendo que:
+
+$$ IC^{95} = \bar{x} \pm t_ {(n-1);\alpha/2}.\frac{s}{\sqrt n}$$
+
+```{r}
+media<-mean(charpy)
+media
+
+cat("A média de energia absorvida no impacto é de", media, "Joules")
+
+t95<-qt(0.025, df=9, lower.tail=FALSE)
+t95
+
+s_charpy<- sd(charpy)
+s_charpy
+
+n<-length(charpy)
+n
+
+IC95<- c(media-t95*s_charpy/sqrt(n), media+t95*s_charpy/sqrt(n))
+IC95
+```
+
+b)  Repita a letra a considerando agora o desvio-padrão igual a 1 (populacional).
+
+$$ IC^{95} = \bar{x} \pm Z_ \frac{\alpha}{2}.\frac{\sigma}{\sqrt n}  $$ Assim, sabendo que :
+
+```{r}
+z95<-qnorm(0.025, mean=0,sd=1, lower.tail=FALSE)
+z95
+```
+
+$$ IC^{95} = 64,46 \pm 1,96.\frac{1}{\sqrt{10}}  $$
+
+O IC para 95% de confiança é: \[63,84; 65,08\]. Note que as diferenças acima foram produzidas pelo uso de diferentes valores do coeficiente Z ou t na fórmula, bem como pelo desvio-padrão considerado. Para amostras grandes, o valor de t se aproxima ao de Z e assim, resta apenas a atenção para com o valor do desvio-padrão a ser utilizado (populacional ou amostral).
+
+::: callout-important
+Fique atento aos dados que possui para realizar os cálculos do IC. Se há o conhecimento prévio do desvio-padrão populacional, ou tenha uma amostra com n\>30, o teste Z é indicado. Caso contrário, onde se tenha apenas uma estimativa pontual do desvio-padrão (amostral), e n\<30, use o teste T para determinar o IC.
+:::
+
+O comprimento do intervalo de confiança (amplitude) é uma medida da precisão da estimação. Deseja-se obter, em geral, um intervalo de confiança de menor amplitude possível e que permita a tomada de decisão com adequada confiança na estatística produzida. Isso pode ser feito pela escolha de uma amostra com tamanho "n" grande o suficiente para gerar a precisão necessária.
+
+::: callout-warning
+É sempre importante se atentar para a normalidade dos dados. As estatísticas até aqui apresentadas partem do principio que os dados seguem uma distribuição normal, co testes chamados paramétricos. Caso não sejam cpnsiderados normais, outros testes (não-paramétricos) deverão ser utilizados.
+:::
+
+## Intervalo de confiança para Variância
+
+Em algumas situações a variabilidade é o maior interesse de controle, não necessariametne sempre será o valor médio ou estimativa pontual de algum parâmetro de medida central. A variância (ou o desvio-padrão, por consequência) pode ser o alvo de ação de controle e otimização.
+
+Se uma amostra aleatória de tamanho n possui distribuição normal (\$\mu; \sigma²), pode-se afirmar que a variável aleatória possui uma distribuição Qui-quadrado, tal que:
+
+$$ \chi² = \frac{(n-1)s²}{\sigma²}$$ Cponsiderando um caso aleatório em que haja, por exemplo, 5 graus de liberdade (n=6), temos a seguinte curva característica da distribuição:
+
+```{r}
+x <- rchisq(50000, df = 5)
+  
+hist(x, 
+     freq = FALSE, 
+     xlim = c(0,16), 
+     ylim = c(0,0.2))
+curve(dchisq(x, df = 5), from = 0, to = 15, 
+      n = 5000, col= 'red', lwd=2, add = T, main= "Distribuição Qui-Quadrado")
+```
+
+Igualmente temos na curva de distribuição Qui-quadrado duas caldas a analisar, com significância igual a $\frac{\alpha}{2}$ em cada uma delas.
+
+O IC para a variância será dado por:
+
+$$ IC(\sigma²)= [\frac{(n-1)s²}{\chi²_{(n-1);{\alpha/2}}};\frac{(n-1)s²}{\chi²_{(n-1);{1}-\frac{\alpha}{2}}}  ]$$
+
+Vamos analisar um desses casos.
+
+**Exemplo 06**
+
+Uma máuina de envase é utilizada para encher garrafas com detergente líquido. Se a variância do volume de enchimento exceder 0,30ml² existirá uma proporção de garrafas que poderá ter enchimento incompleto ou em excesso. Assim, uma amostra de 20 garrafas foi obtida da linha de envase e obteve-se o valor para a variância igual a 0,45 ml². Sabendo que os dados seguem uma distribuição normal, avaliar para um IC de 95%:
+
+$$ IC(\sigma²)= [\frac{(20-1)(0.45)}{\chi²_{(20-1);0.025}};\frac{(20-1)(0.45)}{\chi²_{(20-1);{0.975}}}  ]$$
+
+Para determinar os valores de $\chi²$ usamos os seguintes comandos no R:
+
+-   Para a calda inferior:
+
+```{r}
+qchisq(0.975, df=19, lower.tail=FALSE)
+```
+
+-   Para a cauda superior:
+
+```{r}
+qchisq(0.025, df=19, lower.tail=FALSE)
+```
+
+Assim o IC para a variância, fica:
+
+$$IC(\sigma²)= [\frac{(20-1)(0.45)}{32.85233};\frac{(20-1)(0.45)}{8.906516}]$$ $$IC(\sigma²)= [0,26; 0,96]$$ A variância do volume das garrafas de detergente desta linha de produção está entre 0,26 ml² e 0,96 ml², com 95% de confiança. Conclui-se que haverá problemas de enchimento nesse perfil de ajuste d eprodução do envase de detergentes, pois a variância 0,30ml² está presente no intervalo de confiança, ou seja, haverá variabilidade superior a este padrão.

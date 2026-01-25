@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Eric Bartulici">
+
+<title>statr – Ebart Academy (Em desenvolvimento!)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Ebart Academy (Em desenvolvimento!)</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./autor.html"> 
+<span class="menu-text">Autor</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./contato.html"> 
+<span class="menu-text">Contato</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./planoensino.html">Análise de Dados em Engenharia</a></li><li class="breadcrumb-item"><a href="./statr.html">Estatística Básica na Linguagem R</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      <div class="sidebar-tools-main">
+    <a href="https://linkedin.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-linkedin"></i></a>
+    <a href="https://www.youtube.com/@ebartacademy7018" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-youtube"></i></a>
+</div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Use o R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Praticando_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introdução ao RStudio</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Análise de Dados em Engenharia</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./planoensino.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plano de Ensino</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análise Exploratória de Dados</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statr.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Estatística Básica na Linguagem R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normalidade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normalidade dos Dados</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intervalos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervalos Estatísticos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./testes_stat.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testes Estatísticos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercicios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercícios Propostos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Métodos Quantitativos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./funlinear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programação Linear</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matriz_po.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matrizes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modellin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelamento Linear</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rls.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressão Linear Simples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rlm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressão Linear Múltipla</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simplex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Método Simplex</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Materiais Complementares</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./artigos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Artigos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Anexos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelaz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabela Z</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabela t de Student</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelaqui.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabela Qui-quadrado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelaf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabela F de Snedecor</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#atenção-em-desenvolvimento" id="toc-atenção-em-desenvolvimento" class="nav-link active" data-scroll-target="#atenção-em-desenvolvimento">Atenção: EM DESENVOLVIMENTO</a></li>
+  <li><a href="#as-bases-conceituais-da-estatística" id="toc-as-bases-conceituais-da-estatística" class="nav-link" data-scroll-target="#as-bases-conceituais-da-estatística">As Bases Conceituais da Estatística</a>
+  <ul class="collapse">
+  <li><a href="#variação" id="toc-variação" class="nav-link" data-scroll-target="#variação">Variação:</a></li>
+  <li><a href="#distribuição-de-variável-quantitativa" id="toc-distribuição-de-variável-quantitativa" class="nav-link" data-scroll-target="#distribuição-de-variável-quantitativa">Distribuição de variável quantitativa:</a></li>
+  <li><a href="#estatísticas-descritivas-dos-dados" id="toc-estatísticas-descritivas-dos-dados" class="nav-link" data-scroll-target="#estatísticas-descritivas-dos-dados">Estatísticas descritivas dos dados</a>
+  <ul class="collapse">
+  <li><a href="#síntese-numérica-estatística" id="toc-síntese-numérica-estatística" class="nav-link" data-scroll-target="#síntese-numérica-estatística">Síntese Numérica Estatística</a></li>
+  <li><a href="#visualização-da-moda-média-e-da-mediana" id="toc-visualização-da-moda-média-e-da-mediana" class="nav-link" data-scroll-target="#visualização-da-moda-média-e-da-mediana">Visualização da Moda, Média e da Mediana</a></li>
+  <li><a href="#comparação-de-médias-e-desvios-padrões-de-3-distribuições" id="toc-comparação-de-médias-e-desvios-padrões-de-3-distribuições" class="nav-link" data-scroll-target="#comparação-de-médias-e-desvios-padrões-de-3-distribuições">Comparação de Médias e desvios-padrões de 3 distribuições</a></li>
+  </ul></li>
+  <li><a href="#o-desvio-padrão" id="toc-o-desvio-padrão" class="nav-link" data-scroll-target="#o-desvio-padrão"><em>O Desvio-padrão</em></a>
+  <ul class="collapse">
+  <li><a href="#o-diagrama-de-pareto" id="toc-o-diagrama-de-pareto" class="nav-link" data-scroll-target="#o-diagrama-de-pareto">O Diagrama de Pareto</a></li>
+  <li><a href="#stem-and-leaf" id="toc-stem-and-leaf" class="nav-link" data-scroll-target="#stem-and-leaf">Stem-and-Leaf</a></li>
+  <li><a href="#histogramas" id="toc-histogramas" class="nav-link" data-scroll-target="#histogramas">Histogramas</a></li>
+  <li><a href="#boxplots" id="toc-boxplots" class="nav-link" data-scroll-target="#boxplots">Boxplots</a></li>
+  </ul></li>
+  <li><a href="#notar-que-o-turno-2-apresenta-p-valor-menor-que-0.05-o-que-sugere-não-normalidade-dos-dados.-para-continuar-as-análises-deve-se-investigar-a-suposição-de-normalidade-para-o-turno-2-através-de-nova-amostragem-com-maiores-níveis-ou-ainda-uma-possível-transformação-das-medidas-linearização." id="toc-notar-que-o-turno-2-apresenta-p-valor-menor-que-0.05-o-que-sugere-não-normalidade-dos-dados.-para-continuar-as-análises-deve-se-investigar-a-suposição-de-normalidade-para-o-turno-2-através-de-nova-amostragem-com-maiores-níveis-ou-ainda-uma-possível-transformação-das-medidas-linearização." class="nav-link" data-scroll-target="#notar-que-o-turno-2-apresenta-p-valor-menor-que-0.05-o-que-sugere-não-normalidade-dos-dados.-para-continuar-as-análises-deve-se-investigar-a-suposição-de-normalidade-para-o-turno-2-através-de-nova-amostragem-com-maiores-níveis-ou-ainda-uma-possível-transformação-das-medidas-linearização.">Notar que o turno 2 apresenta p-valor menor que 0.05, o que sugere não-normalidade dos dados. Para continuar as análises, deve-se investigar a suposição de normalidade para o turno 2, através de nova amostragem com maiores níveis, ou ainda uma possível transformação das medidas (linearização).</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./planoensino.html">Análise de Dados em Engenharia</a></li><li class="breadcrumb-item"><a href="./statr.html">Estatística Básica na Linguagem R</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">statr</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Eric Bartulici </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="atenção-em-desenvolvimento" class="level1">
+<h1>Atenção: EM DESENVOLVIMENTO</h1>
+</section>
+<section id="as-bases-conceituais-da-estatística" class="level1">
+<h1>As Bases Conceituais da Estatística</h1>
+<p>Neste capítulo vamos abordar a obtenção de estimativas de variância (e, portanto, do desvio-padrão) para os dados amostrais coletados. Usaremos as técnicas estatísticas para realizar esta análise, entretanto, com o auxílio computacional. Isso não exime o estudante de procurar entender a forma de cálculo, mas essa tarefa foi realizada pelos professores dos cursos de Estatística na academia. Partiremos do princípio com o qual o estudante já possui certa familiaridade com essa área do conhecimento, e que, com um foco prático neste curso, possam ser habilitados ao rápido exercício da técnica. Poderíamos aqui entrar nas explicações das fórmulas estatísticas, suas origens, principais estatísticos atuantes na área, mas nada disso permitirá no momento uma visualização prática das análises que aqui queremos focar.</p>
+<p>Entretanto, apenas como uma breve descrição, vamos relembrar apenas alguns conceitos, suas fórmulas e componentes principais. O primeiro conceito importante, é aquele relacionado à natural variação dos dados amostrais dos indicadores de processo. Sabemos que ao coletar dados de uma linha produtiva, por exemplo, haverá diferentes valores levantados, pois há variações naturais gerados pelas inumeráveis causas atuantes no processo, que influenciam no valor do indicador em estudo. Podemos então entender e revisar o conceito de variação:</p>
+<section id="variação" class="level2">
+<h2 class="anchored" data-anchor-id="variação">Variação:</h2>
+<p>É uma estatística que representa o quanto os dados estão dispersos entorno da média dos dados amostrados.</p>
+<p>Aqui faremos a abordagem para os dados obtidos após realização do procedimento de amostragem, que é a coleta, de forma aleatória, de itens da produção, ou das informações disponíveis, para estudos estatísticos. De posse das variáveis quantitativas e seus valores típicos amostrados, necessitamos avaliar a sua distribuição ao longo de uma escala métrica, analisar sua variabilidade, forma etc. Vamos agora rever alguns conceitos importantes para nosso estudo.</p>
+</section>
+<section id="distribuição-de-variável-quantitativa" class="level2">
+<h2 class="anchored" data-anchor-id="distribuição-de-variável-quantitativa">Distribuição de variável quantitativa:</h2>
+<p>Se refere à natureza ou forma no qual os dados estão dispersos em uma faixa de valores possíveis.</p>
+<p><strong>Centro dos dados</strong>:</p>
+<p>Se refere a um valor que seja representativo, ou médio, da localização do centro do conjunto de dados obtidos.</p>
+<p><strong>Outliers (valores discrepantes)</strong>:</p>
+<p>Se refere a um ou mais valores que se distanciam da grande maioria dos dados amostrados.</p>
+<p><strong>Percentil</strong>:</p>
+<p>O percentil de ordem k (Pk), sendo k assumindo valores entre 0 e 100, é o valor da variável tal que k% dos valores são menores ou iguais a ele, ou seja, (100-k)% das observações são maiores ou iguais a ele, como mostra a <strong>?@fig-percentilk</strong>:</p>
+<p><strong>Percentil Pk</strong></p>
+<p>Assim, quando assumimos que o percentil de 90% de pessoas que vivem com renda menor ou igual a 3,5 mil reais no Brasil, escrevemos P~90= 3,5mil reais. Os percentis P25, P50, e P75 são os quartis Q1, Q2 e Q3, respectivamente, bem como o percentil P50 é a mediana. Já os percentis múltiplos de 10 são considerados decis (P10, P20, etc).</p>
+<p>Para se determinar os valores dos percentis, usamos a seguinte regra detalhada na <strong>?@fig-regraspercentis</strong>:</p>
+<p><em>Regras para determinação dos Percentis Pk</em></p>
+<p>Dado os valores de sódio (mg/100g) em 16 marcas diferentes de barras de chocolate , determine os percentis de 10%, 50% e 90% para as amostras coletadas:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Dados coletados:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>sodio<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">75</span>, <span class="dv">90</span>, <span class="dv">93</span>, <span class="dv">110</span>, <span class="dv">110</span>, <span class="dv">115</span>, <span class="dv">116</span>, <span class="dv">130</span>, <span class="dv">148</span>, <span class="dv">160</span>, <span class="dv">160</span>, <span class="dv">190</span>, <span class="dv">220</span>, <span class="dv">220</span>, <span class="dv">250</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Comando para determinar os valores de sódio para P10, P50 e P90 :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(sodio, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.10</span>, <span class="fl">0.50</span>, <span class="fl">0.90</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  10%   50%   90% 
+ 82.5 123.0 220.0 </code></pre>
+</div>
+</div>
+<p>Podemos estabelecer uma breve síntese numérica dos dados amostrais, através de sua Estatística Descritiva”, como se segue na <strong>?@fig-estatdesc</strong> a seguir:</p>
+</section>
+<section id="estatísticas-descritivas-dos-dados" class="level2">
+<h2 class="anchored" data-anchor-id="estatísticas-descritivas-dos-dados">Estatísticas descritivas dos dados</h2>
+<p>Em um abreve lembrança ao leitor sobre a importância das medidas de posição, os valores de moda, mediana e média devem ser considerados principalmente quando temos assimetria nos dados amostrais, como mostra a <strong>?@fig-sintesenumestat</strong>. Em algumas situações a mediana será m valor mais interessante do que a média, bem como talvez a própria moda.</p>
+<section id="síntese-numérica-estatística" class="level3">
+<h3 class="anchored" data-anchor-id="síntese-numérica-estatística">Síntese Numérica Estatística</h3>
+<p>Para ilustrar um pouco mais o acima exposto, considere uma turma que realizou testes na escrita de textos em sala de aula, com 29 alunos, e que tenham seus desempenhos relativizados com base no número de erros cometidos. A <strong>?@fig-modamediamediana</strong> mostra o resultado, onde podemos notar que a distribuição dos dados altera a importância relativa de se utilizar valores médios para representar a turma como um todo (note que há muitos alunos com desempenhos diferentes da média nas turmas A e C):</p>
+</section>
+<section id="visualização-da-moda-média-e-da-mediana" class="level3">
+<h3 class="anchored" data-anchor-id="visualização-da-moda-média-e-da-mediana">Visualização da Moda, Média e da Mediana</h3>
+<p>Assim, identificar a tendência central de uma variável quantitativa pode não ser suficiente para descrever a sua distribuição, pois dois ou mais grupos podem apresentar a mesma tendência central e serem essencialmente distintos entre si. Para ser possível diferenciar os grupos, é necessário efetuar análises de variabilidade dos dados conjuntamente. A <strong>?@fig-compmediadesvpad</strong> a seguir demonstra o fato com mais propriedade:</p>
+</section>
+<section id="comparação-de-médias-e-desvios-padrões-de-3-distribuições" class="level3">
+<h3 class="anchored" data-anchor-id="comparação-de-médias-e-desvios-padrões-de-3-distribuições">Comparação de Médias e desvios-padrões de 3 distribuições</h3>
+<p>Note que uma mesma curva-padrão normal com mesma variância igual a 1, possui médias distintas, e que, com variâncias diferentes podem apresentar a mesma média (igual a 5). Neste último caso, o processo com maior variabilidade (variância igual a 4 ou desvio-padrão igual a 2) possui pior desempenho na escala sigma que o anterior (variância unitária).</p>
+<p>A Qualidade de um processo é tomada como sendo o inverso de sua variabilidade (Qualidade = 1/ desvio-padrão). Quanto maior a variabilidade do processo, pior será o seu controle e resultado final. Em geral, desejamos realizar dois controles básicos nos processos:</p>
+<ul>
+<li><p>Controle de média da variável quantitativa dentro dos limites de especificação do processo, em especial no seu valor nominal (ou Target), que pode ser o valor médio da faixa de especificação, por exemplo.</p></li>
+<li><p>Controle de variabilidade da variável quantitativa, através da ação nas causas comuns de variação do processo, ou eventualmente, bloqueando as causas especiais de variação, quando identificadas.</p></li>
+</ul>
+<p>Quando controlamos a média e a variabilidade do processo, dizemos que ele está sobre “Controle Estatístico” e “Capacidade” adequada para atender as especificações dos clientes (internos ou externos). O Controle Estatístico de Processos visa atuar na sua estabilidade e também em sua capacidade projetadas. o ideal é que a Qualidade do processo seja tal que haja ambos os requisitos satisfeitos e mantidos ao longo do tempo, como mostra o item (a) da <strong>?@fig-controlestcap</strong> a seguir:</p>
+<p>Para elucidar ainda mais um pouco a importância da variabilidade, vamos considerar o exemplo a seguir.</p>
+<p>Considere duas balanças A e B, onde uma esfera de 1.000 gramas é pesada repetidamente nelas. O resultado das várias medidas podem ser vistos na <strong>?@fig-histbal</strong> a seguir:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note que as duas balanças possuem a mesma tend~encia central (1.000g), como também são simétricas, entretanto, com maior variação de medições na balança B.</p>
+</div>
+</div>
+<p>Quantificando a variabilidade entre as medições: podemos determinar a amplitude de variação em cada balança, ou seja, a diferença entre o maior e o menor valor das medidas (a tabela foi omitida por praticidade apenas). Assim, considere os valores:</p>
+<ul>
+<li><p>Balança A: 1.040g - 945g = 95g.</p></li>
+<li><p>Balança B: 1.095g - 895g = 200g.</p></li>
+</ul>
+<p>Apesar de que a amplitude fornece uma noção da variabilidade total dos dados, ela não informa absolutamente nada de como estão distribuidos os pontos dentro do intervalo delimitado pelo maior e o menor valor dos dados amostrais de cada balança, como mostra a <strong>?@fig-amplitudebalança</strong>.</p>
+<p>Comparação de pesagem em duas balanças distintas A e B</p>
+<p>Uma melhor medida neste caso é o desvio-padrão.</p>
+</section>
+</section>
+<section id="o-desvio-padrão" class="level2">
+<h2 class="anchored" data-anchor-id="o-desvio-padrão"><em>O Desvio-padrão</em></h2>
+<p>Porque a Amplitude Total considera apenas os extremos da variável. Precisamos de uma medida de dispersão que leve em consideração todos os valores da variável. essa medida é o desvio-padrão.</p>
+<p>Calculando o desvio-padrão para medidas de perda de peso de um grupo em regime alimentar:</p>
+<p>Mas o quanto o desvio-padrão representa em relação à media? Isso nos daria uma informação quanto à “magnitude” do desvio-padrão (DP). Para isso podemos calcular o Coeficiente de variação (CV), que pode ser definido como:</p>
+<p><span class="math display">\[CV = {{desvio-padrão}\over{Média\ de\ perda\ de\ peso}}\]</span> <span class="math display">\[CV = {{2,1}\over{4,3}}\ {\ =0,525,\ ou\ seja,\ 52,5\%. }\]</span> O DP do exemplo representa algo em torno de 52,5% do valor da média, portanto indica alta variabilidade dos dados da variável analisada. A maior vantagem do uso do CV é o fato de que ele permite a comparação entre unidades de medidas diferentes para se dar uma noção da dispersão dos dados analisados.</p>
+<p>Considere agora os dados de 16 marcas de chocolates analisadas da <strong>?@fig-chocolates</strong> a seguir:</p>
+<p>Informações nutricionais de barras de chocolate</p>
+<p>As 16 marcas de barras de chocolate são: - mais homogêneas no quesito energia (menor variação do CV); - mais heterogêneas nos quesitos sódio e proteína (maior variação no CV).</p>
+<p>Note que os nutrientes gordura e proteína são medidos na mesma unidade(%), mas os DP´s não são diretamente comparáveis pois as escalas são diferentes entre si.</p>
+<p>Vamos agora abordar a análise quantitativa dos valores médios e de variação dos processos em relação à sua especificação.</p>
+<section id="o-diagrama-de-pareto" class="level3">
+<h3 class="anchored" data-anchor-id="o-diagrama-de-pareto">O Diagrama de Pareto</h3>
+<p>O Diagrama ou Gráfico de Pareto é uma representação gráfica dos dados obtidos sobre determinado problema que ajuda a identificar quais aspectos prioritários devem ser trabalhados</p>
+<p>A adaptação do Princípio de Pareto, inicialmente desenvolvida pelo sociólogo Wilfredo Pareto na Itália, foi feita por Joseph Moses Juran em 1950, adaptando-a à Teoria da Distribuição Desigual das Perdas de Qualidade. Sua concepção é de que uma pequena percentagem das causas (20%) produz a maioria dos defeitos (80%). Portanto as pequenas causas seriam as causas “vitais” dos processos, e que geram as causas “triviais”, por consequência.</p>
+<p>Para montar um diagrama ou gráfico de Pareto, devemos:</p>
+<p>Identificar qual é o problema a ser estudado.</p>
+<p>Pesquisar e elencar os principais possíveis fatores causadores do problema a ser estudado.</p>
+<p>Quantificar as grandezas envolvidas (dados quantitativos do problema).</p>
+<p>Ordená-los por importância decrescente de relevância de forma acumulada, agrupadas por grupos de afinidades ou causas.</p>
+<p>Determinar a magnitude total do problema.</p>
+<p>Identificar os percentuais relativos de cada classe ou grupo.</p>
+<p>Plotar um gráfico de barras de duplo eixo, sendo:</p>
+<p>– O primeiro eixo o valor da classe individual (altura da coluna).</p>
+<p>– O segundo eixo o valor percentual acumulado das classes (gráfico de linha).</p>
+<p>Pareto para as possíveis causas de furo de pneus de caminhão.</p>
+<p>Causas para Pneu Furado</p>
+<p>A análise de barras indica que a(s) principal(is) causa(s) associada(s) aos furos. Uma análise rápida permite identificar que a principal causa é a ocorrência de Buracos na Estrada, seguida de presença de objetos cortantes nela. Juntas, perfazem mais de 80% dos problemas de furos de pneus…</p>
+<p>É muito comum em projetos Seis Sigma utilizar os Gráficos de Pareto para realizar a chamada análise de fenômeno do problema. Esta, consiste em desmembrar em causas menores as causas primárias citadas no Gráfico de Pareto. Obviamente, a causa primária “Buraco na estrada” pode ser dividida em classes menores, como “Buracos rasos com material cortante”, ou “Degradação por Água Pluvial”, etc… com isso, até onde se consiga aprofundar a análise, deve-se fazê-la, obviamente, resguardada as devidas relevâncias ao problema.</p>
+<p>Como os projetos são fortemente amparados por análises econômicas, é importante realizar o desdobramento do problema segundo uma ótica de custos, desdobrando financeiramente os impactos, igualmente. Uma análise quantitativa para as causas, deve se amparada pela relevância econômica para as ações. Podem ocorrer desdobramentos muito significantes em termos de causas primárias dos problemas, mas que não acompanham necessariamente o custo maior das operações. nem sempre a primeira causa de perdas é mais significativa em termos econômicos, os impactos devem ser identificados separadamente.</p>
+</section>
+<section id="stem-and-leaf" class="level3">
+<h3 class="anchored" data-anchor-id="stem-and-leaf">Stem-and-Leaf</h3>
+<p>Estes diagramas de visualização de dados são conhecidos como Diagramas Ramo e Folha, sendo os dados organizados em grupos (os ramos ou STEM) e em valores de cada grupo (as folhas ou LEAF). Com esta organização, permite-se a análise de em quais grupos os dados estão mais concentrados, nos dando uma nossa de “Densidade de Distribuição”.</p>
+<p>Vejamos na forma de um exemplo, como elaborá-lo e interpretá-lo:</p>
+<p>Pareto para as possíveis causas de furo de pneus de caminhão.</p>
+<p>Considere os seguintes dados coletados, a respeito de um indicador que registra as perdas de alimento nos pratos de clientes de um restaurante (Resto Ingesta), onde tem como saída a amostragem de vários pratos (peso em gramas) com sobras em um dia de coleta.</p>
+<p>Dados: 94; 141; 51; 84; 19; 71; 60; 72; 104; 62; 28; 82; 45; 129; 77; 50; 90; 65; 49; 71; 83; 69; 73; 52; 64; 76; 87.</p>
+<p>Para elaborar o diagrama Stem and Leaf procedemos da seguinte forma:</p>
+<p>Em uma primeira coluna colocamos o valor dos decimais das amostras (ou centenas), partindo do menor para o maior valor decimal. No nosso exemplo, a amostra de menor valor em peso é 19 e a maior é 141 gramas. Assim, vamos ordenar em uma coluna valores de 10 a 140.</p>
+<p>Nas demais colunas à direita da primeira, vamos preenchendo com os números das unidades, em ordem de ocorrência, até esgotarem os números da amostra. Por exemplo, o primeiro número da amostragem, 19, estará na linha da dezena 10 e à direita escreve-se o número da unidade 9. Para o Número 60, escreve-se zero ao lado direito do número 60, e assim sucessivamente.</p>
+<p>Assim, obtemos o diagrama:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>resto<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">94</span>, <span class="dv">141</span>, <span class="dv">51</span>, <span class="dv">84</span>, <span class="dv">19</span>, <span class="dv">71</span>, <span class="dv">60</span>, <span class="dv">72</span>, <span class="dv">104</span>, <span class="dv">62</span>, <span class="dv">28</span>, <span class="dv">82</span>, <span class="dv">82</span>, <span class="dv">45</span>, <span class="dv">129</span>, <span class="dv">77</span>, <span class="dv">50</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">49</span>, <span class="dv">71</span>, <span class="dv">83</span>, <span class="dv">69</span>, <span class="dv">73</span>, <span class="dv">52</span>, <span class="dv">64</span>, <span class="dv">76</span>, <span class="dv">87</span>) </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stem</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  The decimal point is 1 digit(s) to the right of the |
+
+   0 | 9
+   2 | 8
+   4 | 59012
+   6 | 02459112367
+   8 | 2234704
+  10 | 4
+  12 | 9
+  14 | 1</code></pre>
+</div>
+</div>
+<p>Caso queira ampliar o tamanho da árvore (Stem) basta introduzir o comando “scale”, dobrando o tamanho, assim:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>resto<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">94</span>, <span class="dv">141</span>, <span class="dv">51</span>, <span class="dv">84</span>, <span class="dv">19</span>, <span class="dv">71</span>, <span class="dv">60</span>, <span class="dv">72</span>, <span class="dv">104</span>, <span class="dv">62</span>, <span class="dv">28</span>, <span class="dv">82</span>, <span class="dv">82</span>, <span class="dv">45</span>, <span class="dv">129</span>, <span class="dv">77</span>, <span class="dv">50</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">49</span>, <span class="dv">71</span>, <span class="dv">83</span>, <span class="dv">69</span>, <span class="dv">73</span>, <span class="dv">52</span>, <span class="dv">64</span>, <span class="dv">76</span>, <span class="dv">87</span>) </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stem</span>(resto, <span class="at">scale=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  The decimal point is 1 digit(s) to the right of the |
+
+   1 | 9
+   2 | 8
+   3 | 
+   4 | 59
+   5 | 012
+   6 | 02459
+   7 | 112367
+   8 | 22347
+   9 | 04
+  10 | 4
+  11 | 
+  12 | 9
+  13 | 
+  14 | 1</code></pre>
+</div>
+</div>
+<p>Note que agora a escala do Stem apareceu do 1 ao 14. O Valor 9 que aparece à direita se refere ao número 19 do vetor “resto”, que não aparecia antes na primeira opção (scale=1, por default).</p>
+<p>Alternativamente, poderíamos escrever o ramo em ordem crescente de 1 a 14 apenas, que o efeito final seria o mesmo visualmente… a informação importante que o diagrama traz é que os dados dos pesos médios de Resto Ingesta estão em torno de 70 gramas aproximadamente. Conferindo:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 72.5</code></pre>
+</div>
+</div>
+<p>Para o empresário neste momento não necessitaria um valor mais confiável, mas já pode estimar o comportamento do indicador de sobras nos pratos após refeições e o quanto de peso ele está em média descartando diariamente, bastando multiplicar o valor médio estimado pelo número de pratos servidos naquele dia. Da mesma forma poderia estimar o peso médio de pratos pesados pelos clientes no dia de trabalho. Para estimativas mais precisas aconselha-se a utilização de análises de médias, medianas e variância dos dados amostrais, através das metodologias estatísticas.</p>
+</section>
+<section id="histogramas" class="level3">
+<h3 class="anchored" data-anchor-id="histogramas">Histogramas</h3>
+<p>Ao analisarmos o diagrama Stem and Leaf, vemos que há uma relação de frequências de ocorrência de alguns valores em torno de valores médios, visualmente observáveis no diagrama anterior (figura 27). Uma nova forma de relacionar estas frequências foi desenvolvida pelos estatísticos em forma de um gráfico de barras, onde no eixo Y relacionam-se as frequências relativas para algumas classes observáveis, sendo estas últimas expressas no eixo X. Assim, para cada variação entre essas classes apontam-se os valores nelas contidos de forma cumulativa, levando a obter-se maiores barras no gráfico para as classes mais presentes nas amostras levantadas, tendo assim, por consequência, que estas representariam as classes mais frequentes na amostra estudada. Vamos ver esse exemplo.</p>
+<p>Neste exemplo, foram coletados em um restaurante os pesos (em gramas) dos pratos que continham sobras de comida após a refeição, o chamado Resto Ingesta. A amostragem se deu aleatoriamente ao longo do serviço em um mês de atendimento, tendo gerado os dados do vetor “resto” anterior (pesos em gramas). Para gerar o histogrma no R basta executar o seguinte comando:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ou ainda:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Caso deseje que o eixo Y seja a densidade de probabilidades, e alterar o nome dos eixos, basta fazer:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Resto Ingesta (g)"</span>, <span class="at">ylab=</span><span class="st">"Densidade Prob"</span>, <span class="at">main=</span> <span class="st">"Histograma - Resto Ingesta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Para finalizar, adicionar a linha normal (gaussiana), adicionam-se os comandos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Resto Ingesta (g)"</span>, <span class="at">ylab=</span><span class="st">"Densidade Prob"</span>, </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">main=</span> <span class="st">"Histograma - Resto Ingesta"</span>) </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(resto),<span class="fu">max</span>(resto))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(resto),<span class="at">sd=</span><span class="fu">sd</span>(resto))</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ao longo das próximas aulas iremos explorar mais os Histogramas.</p>
+</section>
+<section id="boxplots" class="level3">
+<h3 class="anchored" data-anchor-id="boxplots">Boxplots</h3>
+<p>O Boxplot é uma gráfico extremamente útil para visualizar a distribuição dos dados, a presença de causas especiais (valores discrepantes) e também a posição relativa da mediana frente aos dados amostrados. Permite a comparação de vários grupos amostrais, o que será muito útil na análise de processos através dos testes de hipóteses e também nos experimento fatoriais que à frente serão abordados. Um boxplot possui os componentes mostrados na <strong>?@fig-boxplotmontagem</strong> a seguir:</p>
+<p>Podemos avaliar primariamente o tipo de histograma que os dados apresentarão, analisando inicialmente os Boxplots gerados de forma antecipada. Há algumas formas típicas que estão correlacionadas à forma da curva dos dados nos histogramas, sendo as principais retratadas na <strong>?@fig-tiposdist</strong> :</p>
+<p>Utilizaremos esse conceito para avaliar a normalidade dos dados e também a qualidade dos dados amostrais nos capítulos futuros.</p>
+<p>Para o caso do exemplo do resto Ingesta, teríamos o seguinte Boxplot:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(resto, <span class="at">main=</span><span class="st">"Resto Ingesta"</span>, <span class="at">ylab=</span><span class="st">"Peso (g)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A análise do Boxplot indica a presença de causas especiais atuando (pontos extremos ou outliers), que deve ser analisado pontualmente cada caso, pois interferem na obtenção da média e desvio-padrão representativa do processo de medição. Para obter a média e desvio-padrão, temos a opção:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resto) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 72.5</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 26.00783</code></pre>
+</div>
+</div>
+<p>Outra opção é gerar a Estatística descritiva dos dados. Usa-se o comando:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  19.00   58.00   71.50   72.50   83.25  141.00 </code></pre>
+</div>
+</div>
+<p>Para se obter os quartis:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  25%   50%   75% 
+58.00 71.50 83.25 </code></pre>
+</div>
+</div>
+<p>Obtendo a distância interquartílica:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>q3<span class="ot">&lt;-</span><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.75</span>)) </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>q1<span class="ot">&lt;-</span><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.25</span>)) </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>IQ<span class="ot">&lt;-</span>q3<span class="sc">-</span>q1 </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>IQ</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  75% 
+25.25 </code></pre>
+</div>
+</div>
+<p>Um exercício comlementr de análise pod ser a obtenção do coeficiente de varição dos dados (CV), sendo calculado por:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cv<span class="ot">&lt;-</span> <span class="fu">sd</span>(resto)<span class="sc">/</span><span class="fu">mean</span>(resto) </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>cv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3587287</code></pre>
+</div>
+</div>
+<p>Vamos fazer uma análise geral, aplicando os conhecimentos até aqui, no <strong>?@exr-estoqueturno</strong> a seguir:</p>
+<p>Considere o nível de estoque aguardando a etapa de Rosqueamento em uma Fundição de peças (entrada do processo), para os dados diários referentes ao término de cada um dos três turnos de trabalho, da tabela a seguir (peso medido em kg):</p>
+<p>Distribuição de estoque para roscagem ao término de caa turno</p>
+<p>A análise dos dados através de uma estatística descritiva, após carregar os dados da tabela corretamente, fornece:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>estoquerosca<span class="ot">&lt;-</span><span class="fu">read_xlsx</span>(<span class="st">"C:/Users/ericb/OneDrive/Documentos/ADE_github/pesos_roscagem.xlsx"</span>) </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(estoquerosca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Manhã           Tarde           Noite      
+ Min.   : 9511   Min.   : 9515   Min.   : 9363  
+ 1st Qu.: 9705   1st Qu.:10101   1st Qu.: 9713  
+ Median :10000   Median :10505   Median :10194  
+ Mean   :10113   Mean   :10364   Mean   :10125  
+ 3rd Qu.:10436   3rd Qu.:10628   3rd Qu.:10417  
+ Max.   :10905   Max.   :10894   Max.   :10937  </code></pre>
+</div>
+</div>
+<p>Analisando a distribuição dos dados por boxplot, temos:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(estoquerosca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Há uma leve tendência de maior estoque médio no turno da tarde, evidenciado pela mediana, e não foram detectadas causas especiais.</p>
+<p>Analisando o histograma dos turnos, temos:</p>
+<p>Turno da Manhã:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Manhã, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Manhã"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Manhã"</span>)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Manhã),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Manhã))</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Manhã),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Manhã)) </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Turno da tarde:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Tarde, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Tarde"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Tarde"</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Tarde),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Tarde))</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Tarde),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Tarde)) </span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Turno da Noite:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Noite, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Noite"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Noite"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Noite),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Noite))</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Noite),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Noite)) </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A análise dos histogrmas indicam grande dispersão dos dados, talvez até mesmo uma mistura de populações (aspecto bimodal), e demanda maior investigação.</p>
+<p>Importante verificar a normalidade dos dados:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Manhã)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  estoquerosca$Manhã
+W = 0.92037, p-value = 0.1007</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Tarde) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  estoquerosca$Tarde
+W = 0.89837, p-value = 0.03844</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Noite)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  estoquerosca$Noite
+W = 0.95262, p-value = 0.4086</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="notar-que-o-turno-2-apresenta-p-valor-menor-que-0.05-o-que-sugere-não-normalidade-dos-dados.-para-continuar-as-análises-deve-se-investigar-a-suposição-de-normalidade-para-o-turno-2-através-de-nova-amostragem-com-maiores-níveis-ou-ainda-uma-possível-transformação-das-medidas-linearização." class="level2">
+<h2 class="anchored" data-anchor-id="notar-que-o-turno-2-apresenta-p-valor-menor-que-0.05-o-que-sugere-não-normalidade-dos-dados.-para-continuar-as-análises-deve-se-investigar-a-suposição-de-normalidade-para-o-turno-2-através-de-nova-amostragem-com-maiores-níveis-ou-ainda-uma-possível-transformação-das-medidas-linearização.">Notar que o turno 2 apresenta p-valor menor que 0.05, o que sugere não-normalidade dos dados. Para continuar as análises, deve-se investigar a suposição de normalidade para o turno 2, através de nova amostragem com maiores níveis, ou ainda uma possível transformação das medidas (linearização).</h2>
+<p>:::</p>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

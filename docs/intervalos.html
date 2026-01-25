@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Eric Bartulici">
+
+<title>Estimação de Parâmetros – Ebart Academy (Em desenvolvimento!)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-43081d808c96cc46af55a3a816ae9eed.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Ebart Academy (Em desenvolvimento!)</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./autor.html"> 
+<span class="menu-text">Autor</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./contato.html"> 
+<span class="menu-text">Contato</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./planoensino.html">Análise de Dados em Engenharia</a></li><li class="breadcrumb-item"><a href="./intervalos.html">Intervalos Estatísticos</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+      <div class="sidebar-tools-main">
+    <a href="https://linkedin.com" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-linkedin"></i></a>
+    <a href="https://www.youtube.com/@ebartacademy7018" title="" class="quarto-navigation-tool px-1" aria-label=""><i class="bi bi-youtube"></i></a>
+</div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Home</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Use o R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Praticando_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introdução ao RStudio</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Análise de Dados em Engenharia</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./planoensino.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Plano de Ensino</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./aed.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análise Exploratória de Dados</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./statr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estatística Básica na Linguagem R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./normalidade.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Normalidade dos Dados</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intervalos.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Intervalos Estatísticos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./testes_stat.qmd" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Testes Estatísticos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercicios.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Exercícios Propostos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Métodos Quantitativos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./funlinear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Programação Linear</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./matriz_po.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Matrizes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./modellin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelamento Linear</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rls.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressão Linear Simples</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./rlm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regressão Linear Múltipla</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./simplex.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Método Simplex</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Materiais Complementares</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./artigos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Artigos</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
+ <span class="menu-text">Anexos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelaz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabela Z</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelat.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabela t de Student</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelaqui.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabela Qui-quadrado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./tabelaf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Tabela F de Snedecor</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução">Introdução</a>
+  <ul class="collapse">
+  <li><a href="#comando-t.test-para-ics" id="toc-comando-t.test-para-ics" class="nav-link" data-scroll-target="#comando-t.test-para-ics">Comando “<strong>t.test</strong>” para IC’s</a></li>
+  <li><a href="#analise-da-suposição-de-normalidade" id="toc-analise-da-suposição-de-normalidade" class="nav-link" data-scroll-target="#analise-da-suposição-de-normalidade">Analise da suposição de normalidade</a></li>
+  <li><a href="#testes-de-shapiro-wilk" id="toc-testes-de-shapiro-wilk" class="nav-link" data-scroll-target="#testes-de-shapiro-wilk">Testes de Shapiro-Wilk:</a></li>
+  <li><a href="#interpretação-do-ic" id="toc-interpretação-do-ic" class="nav-link" data-scroll-target="#interpretação-do-ic">Interpretação do IC</a></li>
+  <li><a href="#intervalo-de-confiança-para-proporções" id="toc-intervalo-de-confiança-para-proporções" class="nav-link" data-scroll-target="#intervalo-de-confiança-para-proporções">Intervalo de Confiança para Proporções</a></li>
+  <li><a href="#tamanho-da-amostra-para-proporções" id="toc-tamanho-da-amostra-para-proporções" class="nav-link" data-scroll-target="#tamanho-da-amostra-para-proporções">Tamanho da amostra para proporções</a></li>
+  <li><a href="#tamanho-de-amostra-para-dados-normais" id="toc-tamanho-de-amostra-para-dados-normais" class="nav-link" data-scroll-target="#tamanho-de-amostra-para-dados-normais">Tamanho de amostra para dados normais</a></li>
+  <li><a href="#intervalo-de-confiança-para-variância" id="toc-intervalo-de-confiança-para-variância" class="nav-link" data-scroll-target="#intervalo-de-confiança-para-variância">Intervalo de confiança para Variância</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./planoensino.html">Análise de Dados em Engenharia</a></li><li class="breadcrumb-item"><a href="./intervalos.html">Intervalos Estatísticos</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">Estimação de Parâmetros</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Eric Bartulici </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introdução" class="level1">
+<h1>Introdução</h1>
+<p>A inferência estatística consiste em fornecer aos analistas uma visão ou estimação de parãmetros para a tomada de decisão sobre uma determinada população. Essa estimação pode ser de dois tipos básicos:</p>
+<ul>
+<li>Estimativa pontual.</li>
+<li>Estimativa Intervalar.</li>
+</ul>
+<p>A <strong>estimativa pontual</strong> de parâmetros é aquela que nos fornece estatísticas sobre uma determinada variável de interesse de uma população, como média por exemplo, e fornece um valor que não aborda a incerteza de sua estimação. Quando o <strong>erro de estimação</strong> é considerado, assume-se então uma <strong>estimativa intervalar</strong>, ou seja:</p>
+<p>Estimativa Intervalar = Estimativa Pontual + Erro de Estimação</p>
+<p>Vejamos um exemplo:</p>
+<ul>
+<li>Variável de interesse: condutividade tŕmica de um metal (em BTU/hr-ft-ºF).</li>
+<li>Amostragem de algumas resistências forneceram os seguintes valores:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>condut<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">41.60</span>, <span class="fl">41.48</span>, <span class="fl">42.34</span>, <span class="fl">41.95</span>, <span class="fl">41.86</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>          <span class="fl">42.18</span>, <span class="fl">41.72</span>, <span class="fl">42.26</span>, <span class="fl">41.81</span>, <span class="fl">42.04</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>media_condut<span class="ot">&lt;-</span><span class="fu">mean</span>(condut)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">" A condutividade média do metal é de :"</span>, media_condut, <span class="st">"BTU/hr-ft-ºF"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> A condutividade média do metal é de : 41.924 BTU/hr-ft-ºF</code></pre>
+</div>
+</div>
+<p>A estimativa do desvio-padrão amostral é:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>s_condut<span class="ot">&lt;-</span><span class="fu">sd</span>(condut)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O desvio-padrão da condutividade é igual a "</span>, s_condut, <span class="st">"BTU/hr-ft-ºF"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O desvio-padrão da condutividade é igual a  0.2841048 BTU/hr-ft-ºF</code></pre>
+</div>
+</div>
+<p>Assim, o erro-padrão amostral estimado é igual a: <span class="math display">\[ Erro-padrão = \frac{\sigma}{\sqrt n} \]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>erro_pad<span class="ot">&lt;-</span> s_condut<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(condut))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O erro-padrão amostral é igual a "</span>, erro_pad, <span class="st">"BTU/hr-ft-ºF"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O erro-padrão amostral é igual a  0.08984184 BTU/hr-ft-ºF</code></pre>
+</div>
+</div>
+<p>É importante notar que o erro-padrão é apenas cerca de 0,2% da média de condutividade, podendo ser determinado por:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Percentual do erro-padrão = "</span>,<span class="dv">100</span><span class="sc">*</span>erro_pad<span class="sc">/</span>media_condut, <span class="st">"%"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Percentual do erro-padrão =  0.2142969 %</code></pre>
+</div>
+</div>
+<p>Para realizar a estimativa intervalar, é necessário recorrer ao teorema central do limite, pois a média é uma variável aleatória.</p>
+<p><span class="math display">\[ Z = \frac{\bar{x} - \mu}{erro-padrão} \]</span> Assim,</p>
+<p><span class="math display">\[ Z = \frac{\bar{x} - \mu}{\frac{\sigma}{\sqrt n}}\]</span></p>
+<p>A curva normal padrão fornece as áreas relativas a uma distribuição com média centrada em seu valor <span class="math inline">\(\mu\)</span> (média populacional) e desvio-padrão <span class="math inline">\(\sigma\)</span>, tal que, para um intervalo de confiança de 95%, há um nível de significância de 5%, dividido em duas caudas com 2,5% cada uma. Assim, cahmamos a estimativa intervalar de “<strong>Intervalo de Confiança - IC</strong>”. Assim:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="at">by =</span> .<span class="dv">01</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>y<span class="ot">&lt;-</span><span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">log =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>,<span class="dv">0</span>,<span class="dv">1</span>) ; <span class="fu">qnorm</span>(<span class="fl">0.975</span>,<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.959964</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.959964</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rx<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="sc">-</span><span class="fl">1.96</span>, <span class="fl">1.96</span>, <span class="at">by=</span>.<span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>ry<span class="ot">&lt;-</span><span class="fu">numeric</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">length</span>(rx))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ry[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(rx)]<span class="ot">&lt;-</span><span class="fu">dnorm</span>(rx, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">log =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>rx<span class="ot">&lt;-</span><span class="fu">c</span>(rx, <span class="fu">rev</span>(rx))</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="st">'l'</span>, <span class="at">xlab=</span><span class="st">'Curva Normal Padrão'</span>, <span class="at">ylab=</span><span class="st">'fdp(x)'</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Curva Normal Padrão"</span>, <span class="at">col=</span><span class="st">"black"</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(rx, ry, <span class="at">col =</span> <span class="st">'blue'</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">3</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">2.5</span>,<span class="fl">0.1</span>,<span class="st">"2,5%"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">2.5</span>,<span class="fl">0.1</span>,<span class="st">"2,5%"</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">0</span>,<span class="fl">0.12</span>,<span class="st">"95%"</span>, <span class="at">col=</span><span class="st">"white"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">"Área nas caudas: 5%"</span>, <span class="at">adj =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intervalos_files/figure-html/qnorm3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Os valores Z que delimitam ambas as caudas podem ser encontrados pelo comando qnorm, tal que:</p>
+<ul>
+<li>Cauda inferior:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -1.959964</code></pre>
+</div>
+</div>
+<ul>
+<li>Cauda superior:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.959964</code></pre>
+</div>
+</div>
+<p>A estimativa intervalar ou IC pode ser estimada em duas situações: - o desvio-padrão populacional <span class="math inline">\(\sigma\)</span> é <strong>conhecido</strong>. - o desvio-padrão populacional <span class="math inline">\(\sigma\)</span> é <strong>desconhecido</strong>.</p>
+<p>Quando <span class="math inline">\(\sigma\)</span> é conhecido, utiliza-se a distribuição normal Z para calcular o IC, tal que:</p>
+<p><span class="math display">\[ IC^{95} = \bar{x} \pm Z_ \frac{\alpha}{2}.\frac{\sigma}{\sqrt n}  \]</span></p>
+<p>No caso em que <span class="math inline">\(\sigma\)</span> é desconhecido, utiliza-se a distribuição t de student, tal que o IC é calculado por:</p>
+<p><span class="math display">\[ IC^{95} = \bar{x} \pm t_ {(n-1);\alpha/2}.\frac{s}{\sqrt n}\]</span> onde s é o desvio-padrão amostral e t(n-1);<span class="math inline">\(\alpha\)</span>/2 é o valor da distribuição de t de student para (n-1) graus de liberdade.</p>
+<p>Analogamente ao que foi determinado para o valor de Z anteriormente, determinamos o valor de t de student da seguinte forma:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>t<span class="ot">&lt;-</span><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">9</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>t</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.262157</code></pre>
+</div>
+</div>
+<p>No exemplo da condutividade metálica anterior, temos uma amostra de tamanho 10 (n=10) e portanto, utiliza-se a distribuição t para realizar o cálculo do IC (95%). Assim:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span> <span class="fu">length</span>(condut)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>IC_inferior<span class="ot">&lt;-</span> <span class="fu">mean</span>(condut)<span class="sc">-</span>(t<span class="sc">*</span>erro_pad)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>IC_superior<span class="ot">&lt;-</span> <span class="fu">mean</span>(condut)<span class="sc">+</span>(t<span class="sc">*</span>erro_pad)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>IC_condut<span class="ot">&lt;-</span><span class="fu">c</span>(IC_inferior, IC_superior)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>IC_condut</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 41.72076 42.12724</code></pre>
+</div>
+</div>
+<p>Portanto, a condutividade média do condutor metálico (com estimativa pontual de 41,924 BTU/hr-ft-ºF) está presente no IC de [41.72076; 42.12724] para um IC de 95%.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Quando o tamanho da amostra “n” for maior do que 30 (amostras grandes), pode ser utilizado a distribuição normal em lugar da distribuição t. Em amostras com n igual ou menor que 30, recomenda-se a utilização da distribuição t de student, de forma a ter uma análise mais conservadora.</p>
+</div>
+</div>
+<section id="comando-t.test-para-ics" class="level2">
+<h2 class="anchored" data-anchor-id="comando-t.test-para-ics">Comando “<strong>t.test</strong>” para IC’s</h2>
+<p>Para evitar utilizar as fórmulas de cálculo, podemos sutilizar alternativamente um comando rápido, o “t.test”, que roda o teste t de student conforme calculamos acima. Para a estimativa pontual, basta digitar:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(condut)<span class="sc">$</span>estimate   <span class="co">#Estimativa pontual</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>mean of x 
+   41.924 </code></pre>
+</div>
+</div>
+<p>Para a estimativa intervalar, basta digitar:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(condut,<span class="at">conf.level=</span><span class="fl">0.95</span>)<span class="sc">$</span>conf.int  <span class="co">#Intervalo de Confiança</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 41.72076 42.12724
+attr(,"conf.level")
+[1] 0.95</code></pre>
+</div>
+</div>
+</section>
+<section id="analise-da-suposição-de-normalidade" class="level2">
+<h2 class="anchored" data-anchor-id="analise-da-suposição-de-normalidade">Analise da suposição de normalidade</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(condut)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intervalos_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(condut); <span class="fu">qqline</span>(condut)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intervalos_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="testes-de-shapiro-wilk" class="level2">
+<h2 class="anchored" data-anchor-id="testes-de-shapiro-wilk">Testes de Shapiro-Wilk:</h2>
+<p><strong>Teste de Shapiro-Wilk</strong></p>
+<p><em>H0</em>: os dados vieram de uma distribuição que segue o modelo Normal</p>
+<p><em>HA</em>: os dados não vieram de uma distribuição que segue o modelo Normal</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(condut)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Shapiro-Wilk normality test
+
+data:  condut
+W = 0.97355, p-value = 0.9216</code></pre>
+</div>
+</div>
+<p>Com base nos testes acima, não há evidências contra a suposição de normalidade dos dados, não rejeitando-se a Ho (valor-p igual a 0.9216&gt; nível de significância 0.05).</p>
+<p>Exemplo 01</p>
+<p>Os dados a seguir são relativos à força (em libras) necessária para se extrair um conector usado em fabricação de motores. Pede-se:</p>
+<p>Dados:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>f_extract<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">79.3</span>, <span class="fl">75.1</span>, <span class="fl">78.2</span>, <span class="fl">74.1</span>, <span class="fl">73.9</span>, <span class="fl">75.0</span>, <span class="fl">77.6</span>, <span class="fl">77.3</span>, <span class="fl">73.8</span>, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>             <span class="fl">74.6</span>, <span class="fl">75.5</span>, <span class="fl">74.0</span>, <span class="fl">74.7</span>, <span class="fl">75.9</span>, <span class="fl">72.9</span>, <span class="fl">73.8</span>, <span class="fl">74.2</span>, <span class="fl">78.1</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>             <span class="fl">75.4</span>, <span class="fl">76.3</span>, <span class="fl">75.3</span>, <span class="fl">76.2</span>, <span class="fl">74.9</span>, <span class="fl">78.0</span>, <span class="fl">75.1</span>, <span class="fl">76.8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li>Determine a estimativa pontual da força de extração do conector.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>f_media<span class="ot">&lt;-</span><span class="fu">mean</span>(f_extract)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"A força de extração média do conector é de"</span>,f_media, <span class="st">"libras"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A força de extração média do conector é de 75.61538 libras</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Determine o valor da força que separa os 50% maiores esforços dos outros 50% menores.</li>
+</ol>
+<p>O valor que separa 50% dos dados é a mediana. Assim:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>mediana<span class="ot">&lt;-</span><span class="fu">median</span>(f_extract)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">" O valor que separa 50% dos dados à esquerda e à direita é:"</span>, mediana, <span class="st">"libras"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> O valor que separa 50% dos dados à esquerda e à direita é: 75.2 libras</code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>Determine as estimativas pontuais do desvio-padrão e variância dos dados de força de extração do conector.</li>
+</ol>
+<ul>
+<li>Desvio-padrão:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>dp_f<span class="ot">&lt;-</span><span class="fu">sd</span>(f_extract)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O desvio-padrão da força de extração do conector é de"</span>, dp_f, <span class="st">"libras"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O desvio-padrão da força de extração do conector é de 1.654737 libras</code></pre>
+</div>
+</div>
+<ul>
+<li>Variância:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>variancia<span class="ot">&lt;-</span><span class="fu">var</span>(f_extract)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"A variância da força de extração do conector é de"</span>, variancia, <span class="st">"libras"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A variância da força de extração do conector é de 2.738154 libras</code></pre>
+</div>
+</div>
+<ol start="4" type="a">
+<li>Determine a estimativa pontual do erro-padrão da força de extração do conector.</li>
+</ol>
+<ul>
+<li>Erro-padrão:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>erro_pad<span class="ot">&lt;-</span> <span class="fu">sd</span>(f_extract)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(f_extract))</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O erro-padrão amostral é igual a "</span>, erro_pad, <span class="st">"Libras"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O erro-padrão amostral é igual a  0.3245206 Libras</code></pre>
+</div>
+</div>
+<ol start="5" type="a">
+<li>Determine uma estimativa pontual da proporção de conectores que limita a força em 73 libras.</li>
+</ol>
+<p>Para isso deve ser determinado o valor da estimativa do teste t, que fornecerá o valor para o qual se associa 73 libras na distribuição t.</p>
+<p>O teste t, define-se por:</p>
+<p><span class="math display">\[ T = \frac{\bar{x} - \mu}{\frac{s}{\sqrt n}}\]</span></p>
+<p>Assim,</p>
+<p><span class="math display">\[ T = \frac{73 - 75,61}{\frac{1,65}{\sqrt 26}}= -2,61\]</span> Assim, o valor da proporção de conectores que não superam 73 libras de força é de:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>p73<span class="ot">&lt;-</span><span class="fu">pt</span>(<span class="sc">-</span><span class="fl">2.61</span>, <span class="at">df=</span><span class="dv">25</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Cerca de"</span>, <span class="dv">100</span><span class="sc">*</span>p73, <span class="st">"% dos conectores terão força de extração menor que 73 libras."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Cerca de 0.7538574 % dos conectores terão força de extração menor que 73 libras.</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Determinar o quantil para uma área igual a 5% na curva normal, unicaudal inferior.</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>q<span class="ot">&lt;-</span><span class="fu">qnorm</span>(<span class="fl">0.007539</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>,<span class="dv">3</span>,<span class="fl">0.01</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>pd <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(z)</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(z,pd,<span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"Força de Extração &lt; 73 Libras"</span>)</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(z[z<span class="sc">&lt;=</span>q],q),<span class="fu">c</span>(pd[z<span class="sc">&lt;=</span>q],pd[z<span class="sc">==-</span><span class="dv">3</span>]),<span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">60</span>, <span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="dv">2</span>)</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="sc">-</span><span class="fl">2.7</span>,<span class="fl">0.05</span>,<span class="st">"0,75%"</span>)</span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">"z=-2,61"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intervalos_files/figure-html/qnorm-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Exemplo 02</p>
+<p>Para o exercício 01, faça uma estimativa intervalar da força de extração do conector, considerando um IC de 95%, das seguintes formas:</p>
+<ol type="a">
+<li>Aplique a fórmula de determinação do IC requerido.</li>
+</ol>
+<ul>
+<li>Encontrando o tamanho da amostra:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>n_ex02<span class="ot">&lt;-</span><span class="fu">length</span>(f_extract)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O tamanho da amostra é de"</span>, n_ex02, <span class="st">"unidades."</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O tamanho da amostra é de 26 unidades.</code></pre>
+</div>
+</div>
+<ul>
+<li>Determinando o erro-padrão:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>erro_pad_ex02<span class="ot">&lt;-</span> <span class="fu">sd</span>(f_extract)<span class="sc">/</span><span class="fu">sqrt</span>(n_ex02)</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O erro-padrão amostral é igual a "</span>, erro_pad_ex02, <span class="st">"Libras"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O erro-padrão amostral é igual a  0.3245206 Libras</code></pre>
+</div>
+</div>
+<ul>
+<li>Determinando o IC(95%):</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>t2<span class="ot">&lt;-</span><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span>(n_ex02<span class="dv">-1</span>), <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>t2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.059539</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>IC_inferior<span class="ot">&lt;-</span> <span class="fu">mean</span>(f_extract)<span class="sc">-</span>(t2<span class="sc">*</span>erro_pad_ex02)</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>IC_superior<span class="ot">&lt;-</span> <span class="fu">mean</span>(f_extract)<span class="sc">+</span>(t2<span class="sc">*</span>erro_pad_ex02)</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>IC_condut<span class="ot">&lt;-</span><span class="fu">c</span>(IC_inferior, IC_superior)</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>IC_condut</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 74.94702 76.28375</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Utilize o comando t.test para conferir suas contas.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(f_extract)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  f_extract
+t = 233.01, df = 25, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+95 percent confidence interval:
+ 74.94702 76.28375
+sample estimates:
+mean of x 
+ 75.61538 </code></pre>
+</div>
+</div>
+<ol start="3" type="a">
+<li>Utilize agora um IC de 90%. Explique o que ocorreu com o IC determinado comparado ao anterior (letra b).</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(f_extract, <span class="at">conf.level=</span><span class="fl">0.90</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  f_extract
+t = 233.01, df = 25, p-value &lt; 2.2e-16
+alternative hypothesis: true mean is not equal to 0
+90 percent confidence interval:
+ 75.06106 76.16971
+sample estimates:
+mean of x 
+ 75.61538 </code></pre>
+</div>
+</div>
+<p>A amplitude do IC(90%) é de (76.17-75.06 = 1.11), enquanto a amplitude do IC (95%) é de (76.28 - 74.95 = 1,33), uma variação de (1,33 - 1,11 = 0,22) a menor.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>t<span class="ot">&lt;-</span><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">9</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>t</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.262157</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>df2<span class="ot">&lt;-</span>n_ex02<span class="dv">-1</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>df2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 25</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>t2<span class="ot">&lt;-</span><span class="fu">qt</span>(<span class="fl">0.05</span>, <span class="at">df=</span><span class="dv">25</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>t2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.708141</code></pre>
+</div>
+</div>
+<p>Lembrando que:</p>
+<p><span class="math display">\[ IC^{95} = \bar{x} \pm t_ {(n-1);\alpha/2}.\frac{s}{\sqrt n}\]</span></p>
+<p>Por isso ocorre que o valor de IC(90%) é mais “rigoroso”, pois o valor de t do teste é menor (1,71 contra 2,26). Isso significa que quando se deseja maior “confiança” no teste, obviamente a faixa de possíveis valores para a estatística deve aumentar (maior a amplitude para um determinado valor da estimativa cair na faixa considerada!).</p>
+<ol start="4" type="a">
+<li>Determine o erro de estimativa para os IC’s de 90% e 95%.</li>
+</ol>
+<p>O Erro de estimativa <span class="math inline">\(\epsilon\)</span> é dado por:</p>
+<p><span class="math display">\[ \epsilon = t_ {(n-1);\alpha/2}.\frac{s}{\sqrt n}\]</span> Assim, os erros de cada IC podem ser determinados:</p>
+<ul>
+<li>IC 95%:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>t95<span class="ot">&lt;-</span><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">25</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>erro95<span class="ot">&lt;-</span>t95<span class="sc">*</span><span class="fu">sd</span>(f_extract)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(f_extract))</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O erro de estimativa para IC de 95% é de"</span>, erro95)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O erro de estimativa para IC de 95% é de 0.6683627</code></pre>
+</div>
+</div>
+<ul>
+<li>IC 90%:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>t90<span class="ot">&lt;-</span><span class="fu">qt</span>(<span class="fl">0.05</span>, <span class="at">df=</span><span class="dv">25</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>erro90<span class="ot">&lt;-</span>t90<span class="sc">*</span><span class="fu">sd</span>(f_extract)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(f_extract))</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O erro de estimativa para IC de 95% é de"</span>, erro90)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O erro de estimativa para IC de 95% é de 0.5543268</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note que o erro de estimativa é a metade da amplitude da faixa de variação do IC em cada caso.</p>
+</div>
+</div>
+</section>
+<section id="interpretação-do-ic" class="level2">
+<h2 class="anchored" data-anchor-id="interpretação-do-ic">Interpretação do IC</h2>
+<p>Podemos interpretar o valor do IC que temos uma “confiança de x%” de que esse intervalo em especial contenha o valor desconhecido da média populacional <span class="math inline">\(\mu\)</span>. Na imagem abaixo, para m=100 amostras de tamanho (n=3) cada uma, em 5 amostras m não foi encontrado o valor médio da população (<span class="math inline">\(\mu\)</span>=200), destacados em pontos vermelhos. Esse seria o IC de 95%:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="imagens/ic95.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>Se tomarmos IC de 90%, teríamos 10 amostras que não conteriam o valor real da média populacional, ou seja, à medida que diminui o IC maior o número de vezes em que a amostra não contrá o valor esperado da média populacional.</p>
+</section>
+<section id="intervalo-de-confiança-para-proporções" class="level2">
+<h2 class="anchored" data-anchor-id="intervalo-de-confiança-para-proporções">Intervalo de Confiança para Proporções</h2>
+<p>Segundo o Teorema Central do Limite para proporções, define-se que:</p>
+<p><span class="math display">\[ Z = \frac{\bar{p} - p}{{\sqrt {(p(1-p) / n)}}}\]</span> o IC para proporções pode assim ser definido como:</p>
+<p><span class="math display">\[ IC = \hat{p} \pm Z_ \frac{\alpha}{2}.\sqrt {\hat{p}(1-\hat{p}) / n)}  \]</span></p>
+<p>A proporção <span class="math inline">\(\hat{p}\)</span> é determinada pela relação a quantidade de interesse e o tamanho da amostra.</p>
+<p>Exemplo 03</p>
+<p>Uma amostra de 85 rolamentos de virabrequim gerou a informação de que 10 deles estavam com excesso de rugosidade superficial. qual seria o intervalo de confiança de 95% para essa produção de rolamentos?</p>
+<ul>
+<li>Determinação da proporção de defeituosos:</li>
+</ul>
+<p><span class="math inline">\(\hat{p}\)</span>= 10/85 = 0,12 ou 12% com excesso de rugosidade.</p>
+<p>Assim,</p>
+<p><span class="math display">\[ IC^{95} = \hat{p} \pm Z_ \frac{\alpha}{2}.\sqrt {\hat{p}(1-\hat{p}) / n)}  \]</span> Sabendo que o valor da estatística <span class="math inline">\(Z \frac{\alpha}{2}\)</span> para IC de 95% é igual a:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>z95<span class="ot">&lt;-</span><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>z95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.959964</code></pre>
+</div>
+</div>
+<p>temos:</p>
+<p><span class="math display">\[ IC^{95} = 0.12 \pm 1.959964.\sqrt {0.12(1-0.12) / 85)} \]</span> O IC resultante fornece o intervalo de [0.05; 0.19] % de proporção de peças com rugosidades em excesso.</p>
+<p><strong>Exemplo 04</strong></p>
+<p>Determine para o exercício 03 anterior:</p>
+<ol type="a">
+<li>o desvio-padrão para a proporção de peças analisadas.</li>
+</ol>
+<p>Pode ser encontrado por: <span class="math display">\[ DP = \sqrt{\hat{p}(1-\hat{p})/n}\]</span></p>
+<p>Assim, o DP é de:</p>
+<p><span class="math display">\[ DP = \sqrt{0.12(1-0.12) / 85)} = 0.035 \]</span></p>
+<ol start="2" type="a">
+<li>o Erro de estimativa.</li>
+</ol>
+<p>O erro de estimativa <span class="math inline">\(\epsilon\)</span> é de:</p>
+<p><span class="math display">\[\epsilon= Z_{\frac{\alpha}{2}}.DP\]</span> <span class="math display">\[\epsilon= 1.959964*0.035 = 0,069\]</span> Usando o script do R:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>DP<span class="ot">&lt;-</span><span class="fl">0.035</span></span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>erro3<span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)<span class="sc">*</span>DP</span>
+<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"O erro de estimação para a proporção é de"</span>, erro3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>O erro de estimação para a proporção é de 0.06859874</code></pre>
+</div>
+</div>
+</section>
+<section id="tamanho-da-amostra-para-proporções" class="level2">
+<h2 class="anchored" data-anchor-id="tamanho-da-amostra-para-proporções">Tamanho da amostra para proporções</h2>
+<p>Ao explicitarmos o valor de n na equação do erro de estimativa, obtemos:</p>
+<p><span class="math display">\[ n = (Z_{{\frac{\alpha}{2}}/{E}})^2 . \hat{p}(1-\hat{p})\]</span></p>
+<p>Se fosse desejado obter um erro de estimativa máximo de 5% para o exemplo 03, o tamanho da amostra mínima n para esse erro seria de:</p>
+<p><span class="math display">\[ n = (1.96/0.05)^2 . 0.12(1-0.12)= 162,3 \]</span> Seriam necessárias 163 amostras para detectar um erro máximo de 5%, ou erro de 0.05. O iC para este caso seria de :</p>
+<ul>
+<li>Limite Inferior: 0.12 - 0.05 = 0.07</li>
+<li>Limite superior: 0.12 + 0.05 = 0.17</li>
+</ul>
+</section>
+<section id="tamanho-de-amostra-para-dados-normais" class="level2">
+<h2 class="anchored" data-anchor-id="tamanho-de-amostra-para-dados-normais">Tamanho de amostra para dados normais</h2>
+<p>De uma maneira geral, o tamanho de amostra para médias de uma população que segue a distribuição normal pode ser determinada por:</p>
+<p><span class="math display">\[ n = (Z_{\frac{\alpha}{2}}.{\sigma}/E)^2\]</span> <strong>Exemplo 05</strong></p>
+<p>Considere um teste Charpy para determinar a capacidade de absorção de energia de impacto de um produto metálico testado em laboratório. Os resultados dos testes de impacto de 10 amostras estão fornecidos abaixo. Determinar:</p>
+<p>Dados:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>charpy<span class="ot">&lt;-</span><span class="fu">c</span>( <span class="fl">64.1</span>, <span class="fl">64.7</span>, <span class="fl">64.5</span>, <span class="fl">64.6</span>, <span class="fl">64.5</span>, <span class="fl">64.3</span>, <span class="fl">64.6</span>, <span class="fl">64.8</span>, <span class="fl">64.2</span>, <span class="fl">64.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ol type="a">
+<li>o iC de 95% para o teste de impacto, considerando a distribuição t.</li>
+</ol>
+<p>Sabendo que:</p>
+<p><span class="math display">\[ IC^{95} = \bar{x} \pm t_ {(n-1);\alpha/2}.\frac{s}{\sqrt n}\]</span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>media<span class="ot">&lt;-</span><span class="fu">mean</span>(charpy)</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>media</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 64.46</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"A média de energia absorvida no impacto é de"</span>, media, <span class="st">"Joules"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>A média de energia absorvida no impacto é de 64.46 Joules</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>t95<span class="ot">&lt;-</span><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">9</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a>t95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.262157</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a>s_charpy<span class="ot">&lt;-</span> <span class="fu">sd</span>(charpy)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>s_charpy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2270585</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a>n<span class="ot">&lt;-</span><span class="fu">length</span>(charpy)</span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>n</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 10</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>IC95<span class="ot">&lt;-</span> <span class="fu">c</span>(media<span class="sc">-</span>t95<span class="sc">*</span>s_charpy<span class="sc">/</span><span class="fu">sqrt</span>(n), media<span class="sc">+</span>t95<span class="sc">*</span>s_charpy<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>IC95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 64.29757 64.62243</code></pre>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Repita a letra a considerando agora o desvio-padrão igual a 1 (populacional).</li>
+</ol>
+<p><span class="math display">\[ IC^{95} = \bar{x} \pm Z_ \frac{\alpha}{2}.\frac{\sigma}{\sqrt n}  \]</span> Assim, sabendo que :</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>z95<span class="ot">&lt;-</span><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean=</span><span class="dv">0</span>,<span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>z95</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.959964</code></pre>
+</div>
+</div>
+<p><span class="math display">\[ IC^{95} = 64,46 \pm 1,96.\frac{1}{\sqrt{10}}  \]</span></p>
+<p>O IC para 95% de confiança é: [63,84; 65,08]. Note que as diferenças acima foram produzidas pelo uso de diferentes valores do coeficiente Z ou t na fórmula, bem como pelo desvio-padrão considerado. Para amostras grandes, o valor de t se aproxima ao de Z e assim, resta apenas a atenção para com o valor do desvio-padrão a ser utilizado (populacional ou amostral).</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Fique atento aos dados que possui para realizar os cálculos do IC. Se há o conhecimento prévio do desvio-padrão populacional, ou tenha uma amostra com n&gt;30, o teste Z é indicado. Caso contrário, onde se tenha apenas uma estimativa pontual do desvio-padrão (amostral), e n&lt;30, use o teste T para determinar o IC.</p>
+</div>
+</div>
+<p>O comprimento do intervalo de confiança (amplitude) é uma medida da precisão da estimação. Deseja-se obter, em geral, um intervalo de confiança de menor amplitude possível e que permita a tomada de decisão com adequada confiança na estatística produzida. Isso pode ser feito pela escolha de uma amostra com tamanho “n” grande o suficiente para gerar a precisão necessária.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>É sempre importante se atentar para a normalidade dos dados. As estatísticas até aqui apresentadas partem do principio que os dados seguem uma distribuição normal, co testes chamados paramétricos. Caso não sejam cpnsiderados normais, outros testes (não-paramétricos) deverão ser utilizados.</p>
+</div>
+</div>
+</section>
+<section id="intervalo-de-confiança-para-variância" class="level2">
+<h2 class="anchored" data-anchor-id="intervalo-de-confiança-para-variância">Intervalo de confiança para Variância</h2>
+<p>Em algumas situações a variabilidade é o maior interesse de controle, não necessariametne sempre será o valor médio ou estimativa pontual de algum parâmetro de medida central. A variância (ou o desvio-padrão, por consequência) pode ser o alvo de ação de controle e otimização.</p>
+<p>Se uma amostra aleatória de tamanho n possui distribuição normal ($; ²), pode-se afirmar que a variável aleatória possui uma distribuição Qui-quadrado, tal que:</p>
+<p><span class="math display">\[ \chi² = \frac{(n-1)s²}{\sigma²}\]</span> Cponsiderando um caso aleatório em que haja, por exemplo, 5 graus de liberdade (n=6), temos a seguinte curva característica da distribuição:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rchisq</span>(<span class="dv">50000</span>, <span class="at">df =</span> <span class="dv">5</span>)</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, </span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">freq =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">16</span>), </span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="fl">0.2</span>))</span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">dchisq</span>(x, <span class="at">df =</span> <span class="dv">5</span>), <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> <span class="dv">15</span>, </span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">n =</span> <span class="dv">5000</span>, <span class="at">col=</span> <span class="st">'red'</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">add =</span> T, <span class="at">main=</span> <span class="st">"Distribuição Qui-Quadrado"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="intervalos_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Igualmente temos na curva de distribuição Qui-quadrado duas caldas a analisar, com significância igual a <span class="math inline">\(\frac{\alpha}{2}\)</span> em cada uma delas.</p>
+<p>O IC para a variância será dado por:</p>
+<p><span class="math display">\[ IC(\sigma²)= [\frac{(n-1)s²}{\chi²_{(n-1);{\alpha/2}}};\frac{(n-1)s²}{\chi²_{(n-1);{1}-\frac{\alpha}{2}}}  ]\]</span></p>
+<p>Vamos analisar um desses casos.</p>
+<p><strong>Exemplo 06</strong></p>
+<p>Uma máuina de envase é utilizada para encher garrafas com detergente líquido. Se a variância do volume de enchimento exceder 0,30ml² existirá uma proporção de garrafas que poderá ter enchimento incompleto ou em excesso. Assim, uma amostra de 20 garrafas foi obtida da linha de envase e obteve-se o valor para a variância igual a 0,45 ml². Sabendo que os dados seguem uma distribuição normal, avaliar para um IC de 95%:</p>
+<p><span class="math display">\[ IC(\sigma²)= [\frac{(20-1)(0.45)}{\chi²_{(20-1);0.025}};\frac{(20-1)(0.45)}{\chi²_{(20-1);{0.975}}}  ]\]</span></p>
+<p>Para determinar os valores de <span class="math inline">\(\chi²\)</span> usamos os seguintes comandos no R:</p>
+<ul>
+<li>Para a calda inferior:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qchisq</span>(<span class="fl">0.975</span>, <span class="at">df=</span><span class="dv">19</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 8.906516</code></pre>
+</div>
+</div>
+<ul>
+<li>Para a cauda superior:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb87"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qchisq</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">19</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 32.85233</code></pre>
+</div>
+</div>
+<p>Assim o IC para a variância, fica:</p>
+<p><span class="math display">\[IC(\sigma²)= [\frac{(20-1)(0.45)}{32.85233};\frac{(20-1)(0.45)}{8.906516}]\]</span> <span class="math display">\[IC(\sigma²)= [0,26; 0,96]\]</span> A variância do volume das garrafas de detergente desta linha de produção está entre 0,26 ml² e 0,96 ml², com 95% de confiança. Conclui-se que haverá problemas de enchimento nesse perfil de ajuste d eprodução do envase de detergentes, pois a variância 0,30ml² está presente no intervalo de confiança, ou seja, haverá variabilidade superior a este padrão.</p>
+
+
+</section>
+</section>
+
+<a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

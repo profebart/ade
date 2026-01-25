@@ -1,0 +1,6 @@
+---
+title: "Tabela F de Snedecor"
+author: "Eric Bartulici"
+---
+
+Tabela F de Snedecor

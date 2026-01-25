@@ -1,0 +1,35 @@
+---
+title: "Sejam Bem-vindos!"
+image: logo_ebart_circular.png
+about: 
+  template: trestles
+  image-shape: round
+  image-width: 15em
+  links: 
+    - text: Email
+      icon: envelope
+      href: mailto:eric.bartulici@ifmg.edu.br
+    - text: YouTube
+      icon: youtube
+      href: https://youtube.com/@ebartacademy7018 
+---
+
+Olá!
+
+Sejam muito bem-vindos ao site do **prof. Eric Bartulici**, do **Insituto Federal de Ciência e Tecnologia de Minas Gerais - Campus Ouro Branco**.
+
+Este site é dedicado aos estudantes de engenharia (e de áreas afins) que desejem ampliar os conhecimentos na área de **análise de dados e otimização de processos de engenharia**.
+
+Aqui você encontrará diversos textos e exercícios propostos e resolvidos para lhe guiar no caminho de aprendizado prático na análise e interpretação de dados nas áreas de conhecimento de estatística e probabilidades aplicadas, pesquisa operacional (programação linear) e da matemática como base de desenvolvimento de modelamentos de processos, que serão amplamente aplicados em casos didáticos e de fácil entendimento. Não há a pretenção de tornar este material um livro, mas sim, um guia prático de uso. A bibliografia consultada estará disponível para sua pesquisa posterior e estudos complementares.
+
+Para praticar, sugere-se ao estudante buscar utilizar o software RStudio para a resolução de problemas, entretanto, em algumas aplicações outras soluções computacionais serão apresentadas, como aquelas oriundas de planilhas eletrônicas (Excel / Calc) ou de outros softwares como o Minitab, ente outros. Não é necessário ser usuário avançado dos softwares apresentados, mas, o que se deseja, é que o estudante busque se desenvolver nestes, de forma a potencializar as soluções geradas e ampliar a sua capacitação profissional.
+
+Neste site, os alunos encontrarão vários *scripts* aplicados à área de análise quantitativa de dados em engenharia. **Como afirmando anteriormente, não se trata de um curso de formação de Analistas de Dados ou softwares aplicáveis**, mas sim, de **capacitação dos engenheiros** na busca pela **exploração e tomada de decisão técnico-gerencial** através da correta tratativa de dados e **geração de informação de qualidade** para a resolução de problemas do dia-a-dia, tão comuns no campo da Engenharia, em especial, para os discentes do curso de Engenharia Metalúrgica do IFMG.
+
+Ao longo do material, serão propostos exercícios de fixação, onde os conhecimentos adquiridos poderão ser consolidados através da prática, e espera-se que cada estudante os realize à medida que for avançando nos estudos de cada capítulo.
+
+Desejo bom estudos a todos, e estarei à disposição para atendê-los, entre em contato comigo através dos dados disponíveis na aba "Contato" neste site.
+
+**Abraços!**
+
+***Prof. Eric Bartulici***

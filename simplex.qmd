@@ -1,0 +1,254 @@
+---
+title: "Simplex"
+author: "Eric Bartulici"
+---
+
+## 
+
+# Atenção: EM DESENVOLVIMENTO
+
+## Método Simplex com o R
+
+Usando o RStudio para resolver Modelos Lineares
+
+Modelo:
+
+Z(Máx) = 5X1 + 4X2
+
+Sujeito a:
+
+R1: 6X1 + 4X2 $\leq$ 24
+
+R2: X1 + 2X2 $\leq$ 6
+
+R3: -X1 + 2X2 $\leq$ 1
+
+R4: X2 $\leq$ 2
+
+X1 e X2 são positivos
+
+Para resolver os exemplos nesse item, é necessário ter instalado os pacotes a seguir (e carregá-los):
+
+install.packages("boot")
+
+library(boot)
+
+install.packages("matlib")
+
+library(matlib)
+
+```{r}
+#| echo: false
+library(boot) 
+library(matlib)
+
+A<-matrix(c(6,4,1,2,-1,1,0,1), 4, 2, byrow=TRUE) 
+A
+
+b<-c(24,6,1,2) 
+b
+Zmax <-c(5, 4)
+Zmax
+Resolucao<-simplex(Zmax, A1=A, b1= b, maxi = TRUE) 
+Resolucao
+
+```
+
+Gráfico da resolução:
+
+```{r}
+plotEqn(A, b)
+
+Zmax<-c(-2,-8) 
+Zmax
+
+A<-matrix(c(4,2,-3,6,-6,6,0,1,1,0,5,3,1,0), 7, 2, byrow=TRUE) 
+A
+
+b<-c(-8,-6,18,-2,2,15,0) 
+b
+
+Resolucao<-simplex(Zmax, A1=A, b1= b, maxi = TRUE) 
+Resolucao
+```
+
+Gráfico da resolução:
+
+```{r}
+showEqn(A, b)
+plotEqn(A, b)
+
+```
+
+## Caso: Voltar Company
+
+### Relações CVL
+
+Dados:
+
+```{r}
+Vendas<- 1200000 
+Custo_Var<- 900000 
+Custo_Fixo<- 240000
+```
+
+a)  Margem Total na empresa
+
+Margem Total = Vendas - Despesa Variável
+
+Margem Unitária (M1) = Preço Unitário - Despesa Variável Unitária
+
+```{r}
+Preço <- 60 
+Custo_Unit<- 45 
+M1<- Preço - Custo_Unit 
+M1 
+q<- Vendas/Preço 
+q
+
+MTotal<- Vendas-Custo_Var 
+MTotal
+```
+
+Índice de Margem de Contribuição: Imc = MTotal / Vendas
+
+```{r}
+Imc<-MTotal/Vendas 
+Imc
+```
+
+Quociente de Custos Variáveis: Qcv=Custos_Variáveis/receita
+
+Qcv\<- Custo_Var/Vendas Qcv
+
+b)  Qeq (L=0)
+
+```{r}
+qeq<- Custo_Fixo/ M1 
+qeq
+```
+
+c)  Vender \$400.000 a mais
+
+Atualmente e empresa vendeu 20.000 unidades
+
+Vendendo mais \$400.000, significa aumentar as vendas em:
+
+```{r}
+q2<- 400000/Preço 
+q2
+```
+
+Venderá um total de (unidades):
+
+```{r}
+q_nova<-q + q2 
+q_nova
+```
+
+Arredondando quantidades para valores inteiros
+
+```{r}
+q_nova_int<-round(q_nova) 
+q_nova_int
+
+receita_nova<- q_nova_int*Preço 
+receita_nova 
+
+Custo_novo<-q_nova_int*Custo_Unit 
+Custo_novo
+
+Lucro_novo<-receita_nova-Custo_novo 
+Lucro_novo
+```
+
+d)  Lucro mínimo = \$90.000
+
+L=90000 = (Preço - Custo_Unit)\*q - Custo_Fixo
+
+```{r}
+q3 = (90000+Custo_Fixo)/(Preço - Custo_Unit) 
+q3
+```
+
+e)  Plotar gráficos (Lucro, Custos, Receita)
+
+Plotando as retas dos componentes CVL
+
+Equação da Receita
+
+RT = Pv\*q
+
+```{r}
+fRT<-function(q){Preço*q} 
+plot(fRT, 0, q, lwd=3, col="blue", ylab = "$$")
+
+fCT<- function(q){Custo_Unit*q+Custo_Fixo} 
+plot(fCT, 0, q, lwd=3, col="red",add=T)
+
+fL<- function(q){M1*q-Custo_Fixo} 
+plot(fL, 0, q, lwd=3, col="black",add=T)
+
+abline(h=240000); abline (h=0); abline (v=qeq, col="Green", lwd=3)
+```
+
+f)  Reduzindo:
+
+f-1: Despesas fixas em 10%
+
+```{r}
+
+Custo_Fixo_red10<- Custo_Fixo*0.9 
+Custo_Fixo_red10 
+
+Qeq_red10<- Custo_Fixo_red10/M1 
+Qeq_red10
+```
+
+f-2: Despesa_Var_Unit em 10%
+
+```{r}
+Cvu_red10<-Custo_Unit*0.9 
+Cvu_red10 
+Nova_Margem_red10<-Preço-Cvu_red10 
+Nova_Margem_red10 
+Qeq_red10var<-Custo_Fixo/Nova_Margem_red10 
+round(Qeq_red10var)
+```
+
+Melhor para a empresa?
+
+```{r}
+L_red_DF<- Preço*q - (Custo_Unit*q + Custo_Fixo_red10) 
+L_red_DF
+
+L_red_DV<- Preço*q - (Cvu_red10*q + Custo_Fixo) 
+L_red_DV
+
+Dif<-L_red_DV- L_red_DF 
+Dif
+
+```
+
+Mais vantajoso reduzir a Despesa Variável em 10%
+
+```{r}
+Ganho<- L_red_DV/L_red_DF 
+Ganho
+
+```
+
+### Gráfico - Região Viável
+
+```{r}
+fRT2<-function(q_nova_int){Preço*q_nova_int} 
+plot(fRT2, 0, q_nova_int, lwd=3, col="blue", ylab = "$$$")
+
+fCT2<- function(q_nova_int){Cvu_red10*q_nova_int+Custo_Fixo} 
+plot(fCT2, 0, q_nova_int, lwd=3, col="red",add=T)
+
+fL2<- function(q_nova_int){Nova_Margem_red10*q_nova_int-Custo_Fixo} 
+plot(fL2, 0, q_nova_int, lwd=3, col="black",add=T)
+
+abline(h=240000); abline (h=0); abline (v=Qeq_red10var, col="Green", lwd=3)
+```
