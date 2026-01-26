@@ -35,12 +35,12 @@ website:
             href: aed.qmd
           - text: "Estatística Básica na Linguagem R"
             href: statr.qmd
-          - text: "Normalidade dos Dados"
-            href: normalidade.qmd
+          - text: "Correlação e Covariância"
+          - href: correlcov.qmd
+          - text: "Amostragem"
+          - href: amostragem.qmd
           - text: "Intervalos Estatísticos"
             href: intervalos.qmd
-          - text: "Testes Estatísticos"
-            href: testes_stat.qmd          
           - text: "Exercícios Propostos" 
             href: exercicios.qmd
       - section: "Métodos Quantitativos"
@@ -49,6 +49,10 @@ website:
             href: funlinear.qmd
           - text: "Matrizes"
             href: matriz_po.qmd
+          - text: "Normalidade dos Dados"
+            href: normalidade.qmd
+          - text: "Testes Estatísticos"
+            href: testes_stat.qmd
           - text: "Modelamento Linear"
             href: modellin.qmd
           - text: "Regressão Linear Simples"

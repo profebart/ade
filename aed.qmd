@@ -2240,7 +2240,7 @@ Ler conjunto de dados:
 ```{r,3295}
 # Examina a estrutura do data frame "dados"
 
-dados<-read_xlsx("C:/Users/ericb/OneDrive/Documentos/ADE_github/dados/dados_lucro_publicidade.xlsx")
+dados<-read_xlsx("C:/Users/ericb/OneDrive/Documentos/ADE/dados/dados_lucro_publicidade.xlsx")
 str(dados)
 ```
 
@@ -2370,7 +2370,7 @@ confint(modelo2, level=0.95) #Intervalos de Confianca para coeficientes}
 **Ler conjunto de dados:**
 
 ```{r, c3433}
-delivery<-read_xlsx("C:/Users/ericb/OneDrive/Documentos/ADE_github/dados/dados_delivery.xlsx")  
+delivery<-read_xlsx("C:/Users/ericb/OneDrive/Documentos/ADE/dados/dados_delivery.xlsx")  
 str(delivery)
 ```
 

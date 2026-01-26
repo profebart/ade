@@ -1,0 +1,8 @@
+---
+title: "Correlação e Covariância"
+author: "Eric Bartulici"
+---
+
+# Correlação
+
+# Covariância

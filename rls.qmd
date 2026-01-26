@@ -31,7 +31,7 @@ Neste momento será abordado as relações lineares, através de um exemplo.
 
 ```{r}
 library(readxl)
-dadosAl<- read_excel(path="C:/Users/ericb/OneDrive/Documentos/ADE_github/planilhas/alumina.xlsx")
+dadosAl<- read_excel(path="C:/Users/ericb/OneDrive/Documentos/ADE/planilhas/alumina.xlsx")
 str(dadosAl)
 ```
 

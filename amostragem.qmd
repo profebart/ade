@@ -1,0 +1,10 @@
+---
+title: "Amostragem"
+author: "Eric Bartulici"
+---
+
+# Amostragem
+
+# Reamostragem
+
+# Bootstrap
