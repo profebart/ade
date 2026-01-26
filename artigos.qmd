@@ -1,6 +1,0 @@
----
-title: "Artigos"
-author: "Eric Bartulici"
----
-
-# Artigos

@@ -1,5 +1,0 @@
----
-title: "Testes Estatísticos"
-author: "Eric Bartulici"
----
-Em construção

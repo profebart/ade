@@ -43,28 +43,6 @@ website:
             href: intervalos.qmd
           - text: "Exercícios Propostos" 
             href: exercicios.qmd
-      - section: "Métodos Quantitativos"
-        contents:
-          - text: "Programação Linear" 
-            href: funlinear.qmd
-          - text: "Matrizes"
-            href: matriz_po.qmd
-          - text: "Normalidade dos Dados"
-            href: normalidade.qmd
-          - text: "Testes Estatísticos"
-            href: testes_stat.qmd
-          - text: "Modelamento Linear"
-            href: modellin.qmd
-          - text: "Regressão Linear Simples"
-            href: rls.qmd
-          - text: "Regressão Linear Múltipla"
-            href: rlm.qmd
-          - text: "Método Simplex"
-            href: simplex.qmd
-      - section: "Materiais Complementares"
-        contents:
-          - text: "Artigos" 
-            href: artigos.qmd
       - section: "Anexos"
         contents:
           - text: "Tabela Z" 
