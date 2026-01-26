@@ -297,7 +297,7 @@ A análise dos dados através de uma estatística descritiva, após carregar os 
 
 ```{r}
 library(readxl) 
-estoquerosca<-read_xlsx("C:/Users/ericb/OneDrive/Documentos/ADE_github/pesos_roscagem.xlsx") 
+estoquerosca<-read_xlsx("C:/Users/ericb/OneDrive/Documentos/ADE/pesos_roscagem.xlsx") 
 summary(estoquerosca)
 ```
 

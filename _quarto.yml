@@ -3,7 +3,7 @@ project:
   output-dir: docs
 
 website:
-  title: "Ebart Academy (Em desenvolvimento!)"
+  title: "Análise de Dados em Engenharia (Em desenvolvimento!)"
   back-to-top-navigation: true
   navbar: 
     search: true
