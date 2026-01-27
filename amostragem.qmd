@@ -1,9 +1,9 @@
 ---
-title: "Amostragem"
+title: "bootstrap"
 author: "Eric Bartulici"
 ---
 
-# Amostragem
+# Técnicas de Amostragem
 
 # Reamostragem
 

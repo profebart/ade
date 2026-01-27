@@ -23,22 +23,26 @@ website:
     contents:
       - text: Home
         href: index.qmd 
+      - section: "Área do Aluno"
+        contents:
+          - text: "Plano de Ensino"
+            href: planoensino.qmd
+          - text: "Links Úteis"
+            href: linksuteis.qmd
       - section: "Use o R"
         contents:
           - text: "Introdução ao RStudio"
             href: Praticando_R.qmd
       - section: "Análise de Dados em Engenharia"
         contents:
-          - text: "Plano de Ensino"
-            href: planoensino.qmd
           - text: "Análise Exploratória de Dados"
             href: aed.qmd
           - text: "Estatística Básica na Linguagem R"
             href: statr.qmd
           - text: "Correlação e Covariância"
-          - href: correlcov.qmd
+            href: correlcov.qmd
           - text: "Amostragem"
-          - href: amostragem.qmd
+            href: amostragem.qmd
           - text: "Intervalos Estatísticos"
             href: intervalos.qmd
           - text: "Exercícios Propostos" 
