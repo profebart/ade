@@ -43,7 +43,7 @@ website:
             href: correlcov.qmd
           - text: "Amostragem"
             href: amostragem.qmd
-          - text: "Intervalos Estatísticos"
+          - text: "Inferência Estatística"
             href: intervalos.qmd
           - text: "Exercícios Propostos" 
             href: exercicios.qmd
