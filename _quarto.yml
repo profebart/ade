@@ -33,12 +33,12 @@ website:
         contents:
           - text: "Introdução ao RStudio"
             href: Praticando_R.qmd
+          - text: "Estatística Básica na Linguagem R"
+            href: statr.qmd
       - section: "Análise de Dados em Engenharia"
         contents:
           - text: "Análise Exploratória de Dados"
             href: aed.qmd
-          - text: "Estatística Básica na Linguagem R"
-            href: statr.qmd
           - text: "Correlação e Covariância"
             href: correlcov.qmd
           - text: "Amostragem"
