@@ -1,5 +1,5 @@
 ---
-title: "statr"
+title: "Estatística Básica em R"
 author: "Eric Bartulici"
 ---
 
@@ -363,6 +363,5 @@ shapiro.test(estoquerosca$Tarde)
 shapiro.test(estoquerosca$Noite)
 ```
 
-## Notar que o turno 2 apresenta p-valor menor que 0.05, o que sugere não-normalidade dos dados. Para continuar as análises, deve-se investigar a suposição de normalidade para o turno 2, através de nova amostragem com maiores níveis, ou ainda uma possível transformação das medidas (linearização).
+Notar que o turno 2 apresenta p-valor menor que 0.05, o que sugere não-normalidade dos dados. Para continuar as análises, deve-se investigar a suposição de normalidade para o turno 2, através de nova amostragem com maiores níveis, ou ainda uma possível transformação das medidas (linearização).
 
-:::
