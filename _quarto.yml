@@ -49,14 +49,9 @@ website:
             href: exercicios.qmd
       - section: "Anexos"
         contents:
-          - text: "Tabela Z" 
+          - text: "Tabelas" 
             href: tabelaz.qmd
-          - text: "Tabela t de Student" 
-            href: tabelat.qmd
-          - text: "Tabela Qui-quadrado" 
-            href: tabelaqui.qmd
-          - text: "Tabela F de Snedecor" 
-            href: tabelaf.qmd
+            
 format:
   html:
     theme:

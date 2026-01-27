@@ -4,3 +4,5 @@ author: "Eric Bartulici"
 ---
 
 Tabela F de Snedecor
+
+{{< tabelaf.pdf button="Download PDF">}}
