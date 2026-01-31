@@ -5,9 +5,29 @@ author: "Eric Bartulici"
 
 ## Análise de Dados
 
-Neste capítulo será introduzido o conceito de análise exploratória de dados, área esta que vem recebendo maior atenção dos intitulados "**cientista de dados**", já citado por J. W. Tukey em 1962, quanto então este papel era executado habilmente pelo estatísticos, através dos estudos de **inferência estatística**, ou seja, execução de procedimentos e técnicas estatísticas sobre **amostras** na tentativa de extrair informações importantes e úteis sobre grandes **populações**.
+Neste capítulo será introduzido o conceito de análise exploratória de dados, área esta que vem recebendo maior atenção dos intitulados "**cientista de dados**", já citado por J. W. Tukey em 1962, quanto então este papel era executado habilmente pelo estatísticos (e, ainda bem, o é!), através dos estudos de **inferência estatística**, ou seja, execução de procedimentos e técnicas estatísticas realizadas sobre **amostras** na tentativa de extrair informações importantes e úteis sobre grandes **populações**. A criação de modelos é hoje a grande arte de permitir um gerenciamento científico na engenharia em especial.
 
-O grande desafio do "Cientista de dados" é depurar os dados brutos para obter dados utilizáveis, ojetivos, para o estudo que pretende conduzir. A coleta de dados é uma etapa crítica, e deve estar alinhada para com o propósito esperado e entregas finais do projeto que se conduza. Não raramente muitos projetos são abortados por se negligenciar uma correta preparação dos dados, dificultando uma análise objetiva, demandando extensos trabalhos de nova coleta ou, até mesmo, uma reorganização dos dados em suas classes e formatações, para que se permita uma análise correta estatisticamente.
+Um dos ou o grande desafio do "Cientista de dados" é depurar os dados brutos para obter dados utilizáveis, objetivos, para o estudo que pretende conduzir. A coleta de dados é uma etapa crítica, e deve estar alinhada para com o propósito esperado e entregas finais do projeto que se conduza. Não raramente muitos projetos são abortados por se negligenciar uma correta preparação dos dados, dificultando uma análise objetiva, demandando extensos trabalhos de nova coleta ou, até mesmo, uma reorganização dos dados em suas classes e formatações, para que se permita uma análise correta estatisticamente.
+
+Um conceito verdadeiro e popularizado por William Edwards Deming, foi difundido no meio dos grandes estudiosos e artífices da Qualidade Total por todo o globo, que é o que estabelece as bases de todo trabalho científico de elevada qualidade:
+
+:::: callout-warning
+" **O que não pode ser medido, não pode ser gerenciado!**"
+
+-   *William E. Deming*
+
+Obviamente, a frase histórica de Deming pode hoje ser mais explorada, ampliada, com toda a experiência adquirida sobre os ombros desse gigante da Qualidade Total. Antes mesmo de se medir algo, é necessário saber o que se deseja conhecer, explorar. No Seis Sigma é a etapa que hoje conhecemos por "**Define**", ou seja, realmente se definir o que se quer trabalhar, otimizar. Quai seriam as perguntas a serem rtespondidas sobre o processo ou produto? O que o cliente ralmente deseja receber como resultado deste trabalho? Qual é o impato sobre as finanças e resultados da empresa? A sociedade está atendida em sua demanda de forma sartisfatória, ou superior? Enfim, etapa que parece simples de ser ersolvida, mas, talvez, seja a mais complexa no início dos trabalhos, quando o "**norte**" não parece tão localizável assim...
+
+Uma vez finalizada esta etapa, entramos na chamada etapa "**Measure**" do DMAIC- Seis Sigma. A obtenção de **dados confiáveis**, úteis para a análise, é novo desafio a ser vencido. Muita das vezes encontramos nas empresas uma inadequação da infraestrutura de Tecnologia da Informação gerada pela miopia gerencial, que só quer (ou pode) enxergar a determinada **distância,** com os seus olhos **viciados em controle** e não em ***domínio técnico ou tecnológico***. Afinal, metas batidas podem ser feitas com **domínios técnicos parciais** alinhados às carreiras em desenvolvimento, **RH Partners** satisfeitos e **ritos de sucessão** em marcha na criação de riqueza e valor. Não se assustem ao encontrar empresas que trabalham exatamente assim, com o que Betânia Tanure trouxe com o conceito de "**subdesempenho satisfatório**", entregando ótimos resultados, mas longe da excelência operacional que ainda podem obter. O mercado é cruel, ele seleciona as empresas que estão preparadas para crescer (o mesmo com os profissionais de mercado). Deve-se ajustar ocnstantemente o ritmo de mudança interna com o externo, como disse Jack Welch:
+
+::: callout-important
+"**Quando o ritmos de mudança dentro da empresa for ultrapassado pelo ritmo de mudança fora dela, o fim está próximo**"
+
+-   *Jack Welch*
+:::
+::::
+
+Ao iniciar este processo de análise dos dados ("**Analyse**") outra verdade cruel aparece: a **variabilidade dos dados**. às vezes acompanhadas de ruídos de coleta, erros, formatos indevidos ou frequências incompatíveis com a necessidade de análise. Surge a necessidade de depuração dos dados, tarefa ingrata, mas recompensatória! A depender do volume de dados, não há outra alternativa a não ser a utilização de softwares e linguagens de programação, como R, o Python, entre tantas outras, capazes de acelerar esta etapa e entrgar um banco de dados pronto para uso, nas diferentes classes e padrões existentes.
 
 Mas como se classificam estes dados?
 
@@ -29,9 +49,25 @@ Em geral os dados odem ser classificados nas seguintes classes gerais:
 -   *Ordinais*: são caracterizados por apresentarem uma ordenação lógica, sequencial natural;      -   Escolaridade, níveis de qualidade (ruim, boa, excelente), escala de satisfação (0 a 5, por exemplo), etc.  -   *Nominais*: são caracterizados por **NÃO** apresentar uma ordenação natural, identificando características fundamentais para os valores amostrados ou populacionais.      -   Sexo, cor do cabelo, raça, classe, etc.
 ```
 
-Associamos às classes acima a denominação de **variáveis** quando estamos interessados em atuar sobre elas em projetos, em ações de alteração de níveis de resposta, seja na rotina do trabalho, na pesquisa, enfim, em busca de otimizações de desempenho. Mais especificamente podemos denominá-las como sendo **variáveis-resposta** ou variáveis **dependentes** (Y). Sendo estas variáveis que possa controlar ou agir, verificar e alterar as condições do processo, denominamos estas variáveis como sendo **variáveis de controle** (afetam ou determinam uma característica final do produto) ou **de verificação** (atuam na trasnformação do produto no processo e futuramente entregarão a(s) especificação(ões) desejadas pelo cliente).
+Associamos às classes acima a denominação de **variáveis** quando estamos interessados em atuar sobre elas em projetos, em ações de alteração de níveis de resposta, seja na rotina do trabalho, na pesquisa, enfim, em busca de otimizações de desempenho. Mais especificamente podemos denominá-las como sendo **variáveis-resposta** ou variáveis **dependentes** (Y). Sendo estas variáveis que possa controlar ou agir, verificar e alterar as condições do processo, denominamos estas variáveis como sendo **variáveis de controle** (afetam ou determinam uma característica final do produto) ou **de verificação** (atuam na transformação do produto no processo e futuramente entregarão a(s) especificação(ões) desejadas pelo cliente).
 
-No início deste livro foi citado a importância de se trabalhar com os dados normais, ou seja, que sigam a distribuição de probabilidades de Gauss. Nem sempre teremos essa condição satisfeita e outras distribuições de probabilidades estarão presentes no processo, como a distribuição de Poison, por exemplo, muito comum nos processos logísticos, por exemplo.
+Em linhas gerais o que se deseja é obter conhecimento para a tomada de decisão gerencial. Podemos definir uma certa hierarquia, como se segue (adaptado de Fávero/Belfiore\]:
+
+```{mermaid}
+flowchart LR
+  A[Coleta] --> B(Tratamento)
+  B --> C{Confiáveis}
+  C --> D[Análise]
+  C --> E[Descarte]
+  E --> A
+  D --> F[Informação]
+  F --> G[Decisão]
+  G --> H[Conhecimento]
+  H --> I[Domínio Técnico-Gerencial]
+  I --> D
+```
+
+No início deste *e-book* foi citado a importância de se trabalhar com os dados normais, ou seja, que sigam a distribuição de probabilidades de Gauss. Nem sempre teremos essa condição satisfeita e outras distribuições de probabilidades estarão presentes no processo, como a distribuição de Poison, por exemplo, muito comum nos processos logísticos, por exemplo.
 
 É muito importante testar os dados antes de iniciarmos análises estatísticas que dependam da condição de normalidade dos dados, evitando assim erros grosseiros nas análises. Há testes estatísticos e também análises gráficas que ajudam o profissional a identificar facilmente o atendimento a esta condição. O leitor deve se lembrar que uma estatística é conduzida a partir de amostragensobre uma parte de uma população, e com estes ados obtidos busca-se inferir com certo grau de confiança sobre estes valores na população.
 
@@ -39,7 +75,7 @@ No início deste livro foi citado a importância de se trabalhar com os dados no
 
 Assim, devemos treinar nossa capacidade de enxergar o **"mundo probabilístico"** ao lado do **"mundo determinístico"**. Muitos processos são perfeitamente explicáveis segundo modelos estatísticos adequados, e, em alguns casos, os únicos possíveis de execução por modelamento, dada a complexidade, custo, porte ou simplesmente tempo para análises determinísticas.
 
-Os modelos diversos podem ser aplicados sobre variáveis discretas ou em variáveis contínuas. Quando aplicadas sobre variáveis discretas, terão como base os mopdelos discretos de distribuição de probabilidades, como nos casos onde deseja-se avaliar o número de não-confrmidades ou defeitos em produtos. Já quando aplicados sobre variáveis contínuas, os modelos probabilísticos de distribuições contínuas terão o seu lugar, como nos casos onde modelamentos de variáveis contínuas como tempo, comprimento, distância, peso, etc.
+Os modelos diversos podem ser aplicados sobre variáveis discretas ou em variáveis contínuas. Quando aplicadas sobre variáveis discretas, terão como base os modelos discretos de distribuição de probabilidades, como nos casos onde deseja-se avaliar o número de não-conformidades ou defeitos em produtos. Já quando aplicados sobre variáveis contínuas, os modelos probabilísticos de distribuições contínuas terão o seu lugar, como nos casos onde modelamentos de variáveis contínuas como tempo, comprimento, distância, peso, etc.
 
 Uma distribuição contínua pode ser modelada segundo a área sob uma curva de suavização expressa por uma integral em um intervalo definido, como:
 
@@ -55,7 +91,17 @@ As principais distribuições que serão abordadas neste capítulo são de vari�
 
 -   Distribuição Qui-quadrado
 
-Vamos abordar cada uma delas agora.
+Vamos abordar cada uma delas à frente de forma mais detalhada.
+
+### Estatística Descritiva
+
+O papel da estatística descritiva é a obtenção de uma síntese dos dados, de forma inicial, seja através de medidas de tendência central ou de variabilidade, utilizando-se de tabelas, diagrmas, gráficos que permitam ao pesquisador a compreender melhor os dados analisados. Pode ser utilizado através do estudo de única variável (**estatística descritiva univariada**), duas variáveis (**bivariada**) ou com múltiplas variáveis (**multivariada**).
+
+Fávaro e Belfiore propuseram uma relação intressante entre o tipo de variável e as possíveis representações na estatística univariada, como mostra a figura:
+
+![](images/tipo_var_estat_desc_univar_favero.png){fig-align="center"}
+
+Ao longo do *e-book* será explorado as diversas formas de apresentação dos dados acima, em aplicações em cada tópico que se fizer necessário. Por agora, é necessário revisar os principais conceitos estatísticos sobre a distribuição de probabilidades para que o aluno possa tratar adequadamente cada um dos tipos de dados coletados.
 
 ### Distribuição Normal
 
@@ -85,27 +131,26 @@ $$ Z = \dfrac{ \bar{x} - \mu}{s} $$
 
 onde:
 
-$$ \bar{x} : é \ o \ valor \ médio \ amostral \ da \ variável\ de \ interesse. $$ \$\$\mu : é  a  média  populacional
+$$ \bar{x} : é \ o \ valor \ médio \ amostral \ da \ variável\ de \ interesse. $$ $$\mu$$ : é  a  média  populacional
 
-\$\$
-
-\$\$  s: é  o  desvio-padrão amostral. \$\$
+s: é  o  desvio-padrão amostral.
 
 Vejamos como gerar alguns tipos de curvas normais a seguir.
 
 #### Área superior
 
-Imagine que vocẽ queira gerar uma curva normal representativa de um deslocamento de um veículo que tenha média de velocidade igual a 60 Km/h e desvio-padrão de 20 km/h. Deseja-se marcar no histograma a área relativa às velocidades superiores a duas vezes o desvio-padrão, ou seja, 2 x 20 = 40 km/h acima da média de velocidade. Assim, deve ser marcada a área acima de 100km/h.
+Imagine que vocẽ queira gerar uma curva normal representativa de um deslocamento de um veículo oriundo de uma população em estudo que tenha média populacional de velocidade igual a 60 Km/h e desvio-padrão populacional de 20 km/h. Deseja-se marcar no histograma a área relativa às velocidades superiores a duas vezes o desvio-padrão, ou seja, 2 x 20 = 40 km/h acima da média de velocidade. Assim, deve ser hachurada a área acima de 100km/h.
 
+::: callout-note
 Há duas maneiras de se fazer isso:
 
 -   gerar os dados de forma aleatória (o que aqui foi feito).
 
--   Coletar daddos reais e plotar.
+-   Coletar dados reais e plotar.
 
 Para gerar os dados aleatórios, faz-se os seguintes passos:
 
--   Criar uma sequência de pontos aleatórios em "steps" definidos, ou seja, a grandeza de diferenciação dos valores aleatórios. Armazenar em um vetor.
+-   Criar uma sequência de pontos aleatórios em "*steps*" definidos, ou seja, a grandeza de diferenciação dos valores aleatórios. Armazenar em um vetor.
 
 -   Criar a distribuição normal da variável criada no passo anterior, definindo uma média e um desvio-padrão. Armazenar em um vetor.
 
@@ -113,9 +158,9 @@ Para gerar os dados aleatórios, faz-se os seguintes passos:
 
 -   Plotar a curva e o polígono definido anteriormente.
 
--   Adicionar informações e linhas de interesse no histograma, como média, e outras formatações etéticas no gráfico.
+-   Adicionar informações e linhas de interesse no histograma, como média, e outras formatações estéticas no gráfico.
 
-Segue um exemplo ilustrativo:
+Veja um exemplo ilustrativo:
 
 ```{r, c1079}
 x<-seq(-30, 150, by =.01) 
@@ -129,10 +174,61 @@ polygon(rx, ry, col = "gray")
 abline(v=60, h=0, lty=3)
 
 ```
+:::
+
+É possível associar a posição 100Km/h no histograma como sendo o valor de um "**Quantil**" estatístico, ou seja, um valor na escala Z (Z Score) associado ao real valor da variável velocidade (Km/h):
+
+$$ Z = \dfrac{ \bar{x} - \mu}{s} $$ ou seja,
+
+$$ Z = \dfrac{ 100 - 60}{20} $$ $$ Z = 2$$ Consultando a tabela Z normal, temos que para Z=2 as área acima deste quantil é igual a 0,02275 (pelo critério de simetria da curva, a área abaixo de z=2 é igual á área acima de z=-2):
+
+![](images/z_2_sigmas.png){fig-align="center"}
+
+Em termos práticos, associa-se a probabilidade de se encontrar velocidades iguais ou superiores a 100Km/h em 2,27% das vezes em que se medir a população referida de veículos. Ou, por outro lado, em (1 - 2,75%) das vezes (97,25%) os veículos apresentarão velocidades inferiores a 100 Km/h.
+
+::: callout-note
+No R é possível determinar masi precisamente este valor de Z=2 diretamente, uma vez conhecido o valor do quantil associado (Z Score). Basta utilizar o comando **qnorm** com o seguinte formato:
+
+pnorm("valor da variável x", mean = "média populacional"; sd = "desvio-padrão populacional")
+
+Obs: ao se desejar a área superior, é necessário informar ao comando que se deseja alterar a sua saída padrão, que é a área inferior,sempre...) Par isso usa-se o comando "lower.tail = F" ou "False"):
+
+```{r}
+
+z100<-pnorm(100, mean = 60, sd= 20, lower.tail = F)
+z100
+
+```
+Assim, pode-se obter o valor da variável X (quantil) a partir do Z Score com o comando **qnorm** , da seguinte forma,:
+
+```{r}
+
+q100<- qnorm(0.02275013, mean=60, sd=20, lower.tail = F)
+q100
+```
+
+O valor Z=2 pode ser obtido com a entrada de dados agora para média e desvio-padrão padronizados:
+
+```{r}
+
+z_score<-qnorm(0.02275013, mean=0, sd=1, lower.tail = F)
+z_score
+```
+
+Se preferir, use o vetor criado anteriormente:
+```{r}
+
+z_score<-qnorm(z100, mean=0, sd=1, lower.tail = F)
+z_score
+```
+
+:::
+
+Vamos analisar o caso em que se tenha velocidades compreendidas entre valroes máximos e mínimos desejados (áreas intermediárias).
 
 #### Área intermediária
 
-Neste exemplo, deseja-se hachurar a área compreendida entre os quartis Q1 e Q3, para o exemplo anterior. Assim, sabendo que os quartis são inicialmente desconhecidos, devemos encontrálos através de comandos tipo "qnorm" no R. Os quantis seriam aqueles percentis que separam os 25% menores valores e os 75% maiores valores, estando entre eles 50% dos dados. Assim:
+Neste exemplo, deseja-se hachurar a área compreendida entre os quartis Q1 e Q3, para o exemplo anterior. Assim, sabendo que os quartis são inicialmente desconhecidos, devemos encontrálos através de comandos tipo "qnorm" no R. Os quantis seriam aqueles associados aos percentis que separam os 25% menores valores e os 75% maiores valores, estando entre eles 50% dos dados. Assim:
 
 ```{r, c1096}
 Q1<- qnorm(0.25, mean=60, sd=20)  
@@ -152,6 +248,8 @@ plot(x, y, 'l', xlab='Velocidade (Km/h)', ylab='fdp(x)',      main = "Distribui�
 polygon(rx, ry, col = 'blue') 
 abline(v=60, h=0, lty=3)
 ```
+
+Vejamos agora outras alternativas.
 
 #### Alternativa - sem escala Z
 
@@ -234,18 +332,20 @@ x
 
 #### Área superior com escala x
 
-Similar ao anterior, agora definindo área superior, entre 1,875 e 3 sigmas.
+Similar ao anterior, agora definindo área superior, contida entre 1,875 e 3 sigmas.
 
 ```{r, c1195}
+x <- seq(-3,3,0.01)
 z <- seq(1.875,3,0.01) 
 p <- dnorm(z) 
 z <- c(z,3,1.875) 
 p <- c(p,min(p),min(p)) 
 plot(x,dnorm(x),type="l",xaxt="n",ylab="probability density",xlab="Peso (gramas)", main="Distribuição de Pesos do Produto") 
-axis(1,at=-3:3,labels=c("146","154","162","170","178","186","192")) 
+axis(1,at=-3:3) 
 polygon(z,p,col="red") 
 abline(h=0, lty=3)
 ```
+
 
 #### Área intermediária com escala x
 

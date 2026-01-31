@@ -473,7 +473,7 @@ Em algumas situações a variabilidade é o maior interesse de controle, não ne
 
 Se uma amostra aleatória de tamanho n possui distribuição normal (\$\mu; \sigma²), pode-se afirmar que a variável aleatória possui uma distribuição Qui-quadrado, tal que:
 
-$$ \chi² = \frac{(n-1)s²}{\sigma²}$$ Cponsiderando um caso aleatório em que haja, por exemplo, 5 graus de liberdade (n=6), temos a seguinte curva característica da distribuição:
+$$ \chi² = \frac{(n-1)s²}{\sigma²}$$ Considerando um caso aleatório em que haja, por exemplo, 5 graus de liberdade (n=6), temos a seguinte curva característica da distribuição:
 
 ```{r}
 x <- rchisq(50000, df = 5)

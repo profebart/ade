@@ -2,13 +2,14 @@
 title: "Praticando o RStudio"
 author: "Eric Bartulici"
 ---
+
 # Atenção: EM DESENVOLVIMENTO
 
 # Praticando o R - Módulo de Nivelamento
 
- Comandos básicos matemáticos
+Comandos básicos matemáticos
 
- Operações básicas: +, -, *, /, ^, sqrt()
+Operações básicas: +, -, \*, /, \^, sqrt()
 
 ```{r}
 2+2 
@@ -17,8 +18,6 @@ author: "Eric Bartulici"
 4^2 
 sqrt(81)
 ```
-
-
 
 # Criando objetos
 
@@ -37,8 +36,6 @@ class(frutas)
 sqrt(dados)
 ```
 
-
-
 # Comandos básicos da estatística
 
 # Criando um vetor numérico
@@ -53,8 +50,6 @@ length(x)
 length(frutas)
 ```
 
-
-
 # Realizando cálculos com vetores criados
 
 # inverso de x:
@@ -63,7 +58,6 @@ length(frutas)
 1/x 
 inverso_x<- 1/x
 ```
-
 
 # Média de X
 
@@ -77,15 +71,11 @@ media<- sum(x)/length(x)
 media
 ```
 
-
-
 # Desvio-padrão de x
 
 ```{r}
 sd(x)
 ```
-
-
 
 # Mediana de "dados"
 
@@ -95,8 +85,6 @@ median(x)
 dados_ordenados<-sort(dados) 
 dados_ordenados
 ```
-
-
 
 # Variância de x
 
@@ -109,9 +97,8 @@ variancia<-(sum((x-mean(x))^2)/(length(x)-1))
 variancia
 ```
 
-
-
 # Criando novo vetor, utilizando um anterior criado:
+
 ```{r}
 y<-c(x, 0, 2*x) 
 y
@@ -120,8 +107,6 @@ length(y)
 z<-(c(x, 0, inverso_x))
 z
 ```
-
-
 
 # Analisando valores pertencentes ao vetor
 
@@ -136,7 +121,6 @@ summary(y)
 summary(z) 
 summary(dados)
 ```
-
 
 # Criando sequências regulares:
 
@@ -155,8 +139,6 @@ Vetorseq<-seq(-50, 50, by=5)
 Vetorseq
 ```
 
-
-
 # Criando vetores de repetição:
 
 ```{r}
@@ -167,8 +149,6 @@ VetorRep
 VetorRep[3]<-0 
 VetorRep
 ```
-
-
 
 # Criando Vetores lógicos
 
@@ -182,8 +162,8 @@ test_x<-x==5.6
 test_x 
 
 ```
-ATenção: test_x<-x=5.6 # Erro!
 
+ATenção: test_x\<-x=5.6 \# Erro!
 
 #Descobrindo a posição onde um vetor está com formatação errônea: z\<-c(1:3, NA) z ind\<-is.na(z) ind
 
@@ -197,8 +177,6 @@ x
 VetorRep<-x[(1:3)] 
 VetorRep
 ```
-
-
 
 # Vetores alfanuméricos
 
@@ -214,8 +192,6 @@ labs<-c("X", "Y")[rep(c(1,2,2,1), times=4)]
 labs
 ```
 
-
-
 # Vetores com números e letras/palavras
 
 ```{r}
@@ -224,5 +200,3 @@ names(fruta)<-c("laranja", "banana", "maçã", "pêra")
 jantar<-fruta[c("maçã", "laranja")] 
 jantar
 ```
-
-
