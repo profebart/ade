@@ -1,7 +1,7 @@
 project:
   type: website
   output-dir: docs
-
+  
 website:
   title: "Análise de Dados em Engenharia (Em desenvolvimento!)"
   back-to-top-navigation: true
