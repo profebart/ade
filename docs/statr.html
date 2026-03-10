@@ -399,7 +399,7 @@ window.Quarto = {
 <p>Assim, quando assumimos que o percentil de 90% de pessoas que vivem com renda menor ou igual a 3,5 mil reais no Brasil, escrevemos P~90= 3,5mil reais. Os percentis P25, P50, e P75 são os quartis Q1, Q2 e Q3, respectivamente, bem como o percentil P50 é a mediana. Já os percentis múltiplos de 10 são considerados decis (P10, P20, etc).</p>
 <p>Para se determinar os valores dos percentis, usamos a seguinte regra detalhada na <strong>?@fig-regraspercentis</strong>:</p>
 <p><em>Regras para determinação dos Percentis Pk</em></p>
-<p>Dado os valores de sódio (mg/100g) em 16 marcas diferentes de barras de chocolate , determine os percentis de 10%, 50% e 90% para as amostras coletadas:</p>
+<p>Dado os valores de sódio (mg/100g) em 16 lotes diferentes de soluções salinas , determine os percentis de 10%, 50% e 90% para as amostras coletadas:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Dados coletados:</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -413,18 +413,48 @@ window.Quarto = {
  82.5 123.0 220.0 </code></pre>
 </div>
 </div>
-<p>Podemos estabelecer uma breve síntese numérica dos dados amostrais, através de sua Estatística Descritiva”, como se segue na <strong>?@fig-estatdesc</strong> a seguir:</p>
 </section>
 <section id="estatísticas-descritivas-dos-dados" class="level2">
 <h2 class="anchored" data-anchor-id="estatísticas-descritivas-dos-dados">Estatísticas descritivas dos dados</h2>
-<p>Em um abreve lembrança ao leitor sobre a importância das medidas de posição, os valores de moda, mediana e média devem ser considerados principalmente quando temos assimetria nos dados amostrais, como mostra a <strong>?@fig-sintesenumestat</strong>. Em algumas situações a mediana será m valor mais interessante do que a média, bem como talvez a própria moda.</p>
+<p>Em uma breve lembrança ao leitor sobre a importância das medidas de posição, os valores de moda, mediana e média devem ser considerados principalmente quando temos assimetria nos dados amostrais. Em algumas situações a mediana será um valor mais interessante do que a média, bem como talvez a própria moda.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(sodio)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <section id="síntese-numérica-estatística" class="level3">
 <h3 class="anchored" data-anchor-id="síntese-numérica-estatística">Síntese Numérica Estatística</h3>
-<p>Para ilustrar um pouco mais o acima exposto, considere uma turma que realizou testes na escrita de textos em sala de aula, com 29 alunos, e que tenham seus desempenhos relativizados com base no número de erros cometidos. A <strong>?@fig-modamediamediana</strong> mostra o resultado, onde podemos notar que a distribuição dos dados altera a importância relativa de se utilizar valores médios para representar a turma como um todo (note que há muitos alunos com desempenhos diferentes da média nas turmas A e C):</p>
+<p>Para ilustrar um pouco mais o acima exposto, considere uma turma que realizou testes na escrita de textos em sala de aula, com 29 alunos, e que tenham seus desempenhos relativizados com base no número de erros cometidos. A <strong>?@fig-mediamodamediana</strong> mostra o resultado, onde podemos notar que a distribuição dos dados altera a importância relativa de se utilizar valores médios para representar a turma como um todo (note que há muitos alunos com desempenhos diferentes da média nas turmas A e C):</p>
+<p><img src="images/mediamodamediana.png" class="img-fluid"></p>
 </section>
 <section id="visualização-da-moda-média-e-da-mediana" class="level3">
 <h3 class="anchored" data-anchor-id="visualização-da-moda-média-e-da-mediana">Visualização da Moda, Média e da Mediana</h3>
 <p>Assim, identificar a tendência central de uma variável quantitativa pode não ser suficiente para descrever a sua distribuição, pois dois ou mais grupos podem apresentar a mesma tendência central e serem essencialmente distintos entre si. Para ser possível diferenciar os grupos, é necessário efetuar análises de variabilidade dos dados conjuntamente. A <strong>?@fig-compmediadesvpad</strong> a seguir demonstra o fato com mais propriedade:</p>
+<p>Para se obter uma estatística descritiva básica, utiliza-se o comando “<em>summary</em>”, fornecendo valores de média, valores mínimo e máximo, mediana, 1ºe 3º quartis:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sodio)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+   40.0   105.8   123.0   139.2   167.5   250.0 </code></pre>
+</div>
+</div>
+<p>Como alternativa, pode-se usar o comando “<em>describe</em>”, do pacote “<em>psych</em>”:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: pacote 'psych' foi compilado no R versão 4.5.2</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">describe</span>(sodio)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   vars  n   mean   sd median trimmed   mad min max range skew kurtosis    se
+X1    1 16 139.19 57.9    123  138.36 51.89  40 250   210 0.33    -0.95 14.48</code></pre>
+</div>
+</div>
 </section>
 <section id="comparação-de-médias-e-desvios-padrões-de-3-distribuições" class="level3">
 <h3 class="anchored" data-anchor-id="comparação-de-médias-e-desvios-padrões-de-3-distribuições">Comparação de Médias e desvios-padrões de 3 distribuições</h3>
@@ -511,8 +541,8 @@ Note
 </ol>
 <p>Assim, obtemos o diagrama:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>resto<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">94</span>, <span class="dv">141</span>, <span class="dv">51</span>, <span class="dv">84</span>, <span class="dv">19</span>, <span class="dv">71</span>, <span class="dv">60</span>, <span class="dv">72</span>, <span class="dv">104</span>, <span class="dv">62</span>, <span class="dv">28</span>, <span class="dv">82</span>, <span class="dv">82</span>, <span class="dv">45</span>, <span class="dv">129</span>, <span class="dv">77</span>, <span class="dv">50</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">49</span>, <span class="dv">71</span>, <span class="dv">83</span>, <span class="dv">69</span>, <span class="dv">73</span>, <span class="dv">52</span>, <span class="dv">64</span>, <span class="dv">76</span>, <span class="dv">87</span>) </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stem</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>resto<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">94</span>, <span class="dv">141</span>, <span class="dv">51</span>, <span class="dv">84</span>, <span class="dv">19</span>, <span class="dv">71</span>, <span class="dv">60</span>, <span class="dv">72</span>, <span class="dv">104</span>, <span class="dv">62</span>, <span class="dv">28</span>, <span class="dv">82</span>, <span class="dv">82</span>, <span class="dv">45</span>, <span class="dv">129</span>, <span class="dv">77</span>, <span class="dv">50</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">49</span>, <span class="dv">71</span>, <span class="dv">83</span>, <span class="dv">69</span>, <span class="dv">73</span>, <span class="dv">52</span>, <span class="dv">64</span>, <span class="dv">76</span>, <span class="dv">87</span>) </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stem</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   The decimal point is 1 digit(s) to the right of the |
@@ -529,8 +559,8 @@ Note
 </div>
 <p>Caso queira ampliar o tamanho da árvore (Stem) basta introduzir o comando “scale”, dobrando o tamanho, assim:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>resto<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">94</span>, <span class="dv">141</span>, <span class="dv">51</span>, <span class="dv">84</span>, <span class="dv">19</span>, <span class="dv">71</span>, <span class="dv">60</span>, <span class="dv">72</span>, <span class="dv">104</span>, <span class="dv">62</span>, <span class="dv">28</span>, <span class="dv">82</span>, <span class="dv">82</span>, <span class="dv">45</span>, <span class="dv">129</span>, <span class="dv">77</span>, <span class="dv">50</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">49</span>, <span class="dv">71</span>, <span class="dv">83</span>, <span class="dv">69</span>, <span class="dv">73</span>, <span class="dv">52</span>, <span class="dv">64</span>, <span class="dv">76</span>, <span class="dv">87</span>) </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stem</span>(resto, <span class="at">scale=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>resto<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">94</span>, <span class="dv">141</span>, <span class="dv">51</span>, <span class="dv">84</span>, <span class="dv">19</span>, <span class="dv">71</span>, <span class="dv">60</span>, <span class="dv">72</span>, <span class="dv">104</span>, <span class="dv">62</span>, <span class="dv">28</span>, <span class="dv">82</span>, <span class="dv">82</span>, <span class="dv">45</span>, <span class="dv">129</span>, <span class="dv">77</span>, <span class="dv">50</span>, <span class="dv">90</span>, <span class="dv">65</span>, <span class="dv">49</span>, <span class="dv">71</span>, <span class="dv">83</span>, <span class="dv">69</span>, <span class="dv">73</span>, <span class="dv">52</span>, <span class="dv">64</span>, <span class="dv">76</span>, <span class="dv">87</span>) </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">stem</span>(resto, <span class="at">scale=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
   The decimal point is 1 digit(s) to the right of the |
@@ -554,7 +584,7 @@ Note
 <p>Note que agora a escala do Stem apareceu do 1 ao 14. O Valor 9 que aparece à direita se refere ao número 19 do vetor “resto”, que não aparecia antes na primeira opção (scale=1, por default).</p>
 <p>Alternativamente, poderíamos escrever o ramo em ordem crescente de 1 a 14 apenas, que o efeito final seria o mesmo visualmente… a informação importante que o diagrama traz é que os dados dos pesos médios de Resto Ingesta estão em torno de 70 gramas aproximadamente. Conferindo:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 72.5</code></pre>
 </div>
@@ -566,52 +596,52 @@ Note
 <p>Ao analisarmos o diagrama Stem and Leaf, vemos que há uma relação de frequências de ocorrência de alguns valores em torno de valores médios, visualmente observáveis no diagrama anterior (figura 27). Uma nova forma de relacionar estas frequências foi desenvolvida pelos estatísticos em forma de um gráfico de barras, onde no eixo Y relacionam-se as frequências relativas para algumas classes observáveis, sendo estas últimas expressas no eixo X. Assim, para cada variação entre essas classes apontam-se os valores nelas contidos de forma cumulativa, levando a obter-se maiores barras no gráfico para as classes mais presentes nas amostras levantadas, tendo assim, por consequência, que estas representariam as classes mais frequentes na amostra estudada. Vamos ver esse exemplo.</p>
 <p>Neste exemplo, foram coletados em um restaurante os pesos (em gramas) dos pratos que continham sobras de comida após a refeição, o chamado Resto Ingesta. A amostragem se deu aleatoriamente ao longo do serviço em um mês de atendimento, tendo gerado os dados do vetor “resto” anterior (pesos em gramas). Para gerar o histogrma no R basta executar o seguinte comando:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="statr_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="statr_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Ou ainda:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="statr_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="statr_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Caso deseje que o eixo Y seja a densidade de probabilidades, e alterar o nome dos eixos, basta fazer:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Resto Ingesta (g)"</span>, <span class="at">ylab=</span><span class="st">"Densidade Prob"</span>, <span class="at">main=</span> <span class="st">"Histograma - Resto Ingesta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a> <span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Resto Ingesta (g)"</span>, <span class="at">ylab=</span><span class="st">"Densidade Prob"</span>, <span class="at">main=</span> <span class="st">"Histograma - Resto Ingesta"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="statr_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="statr_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Para finalizar, adicionar a linha normal (gaussiana), adicionam-se os comandos:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Resto Ingesta (g)"</span>, <span class="at">ylab=</span><span class="st">"Densidade Prob"</span>, </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">main=</span> <span class="st">"Histograma - Resto Ingesta"</span>) </span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(resto),<span class="fu">max</span>(resto))</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(resto),<span class="at">sd=</span><span class="fu">sd</span>(resto))</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(resto, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, </span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">prob=</span><span class="cn">TRUE</span>, <span class="at">xlab=</span><span class="st">"Resto Ingesta (g)"</span>, <span class="at">ylab=</span><span class="st">"Densidade Prob"</span>, </span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">main=</span> <span class="st">"Histograma - Resto Ingesta"</span>) </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(resto),<span class="fu">max</span>(resto))</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(resto),<span class="at">sd=</span><span class="fu">sd</span>(resto))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="statr_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="statr_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -625,29 +655,29 @@ Note
 <p>Utilizaremos esse conceito para avaliar a normalidade dos dados e também a qualidade dos dados amostrais nos capítulos futuros.</p>
 <p>Para o caso do exemplo do resto Ingesta, teríamos o seguinte Boxplot:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(resto, <span class="at">main=</span><span class="st">"Resto Ingesta"</span>, <span class="at">ylab=</span><span class="st">"Peso (g)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(resto, <span class="at">main=</span><span class="st">"Resto Ingesta"</span>, <span class="at">ylab=</span><span class="st">"Peso (g)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="statr_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="statr_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>A análise do Boxplot indica a presença de causas especiais atuando (pontos extremos ou outliers), que deve ser analisado pontualmente cada caso, pois interferem na obtenção da média e desvio-padrão representativa do processo de medição. Para obter a média e desvio-padrão, temos a opção:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resto) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(resto) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 72.5</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 26.00783</code></pre>
 </div>
 </div>
 <p>Outra opção é gerar a Estatística descritiva dos dados. Usa-se o comando:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(resto)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
   19.00   58.00   71.50   72.50   83.25  141.00 </code></pre>
@@ -655,7 +685,7 @@ Note
 </div>
 <p>Para se obter os quartis:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  25%   50%   75% 
 58.00 71.50 83.25 </code></pre>
@@ -663,10 +693,10 @@ Note
 </div>
 <p>Obtendo a distância interquartílica:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>q3<span class="ot">&lt;-</span><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.75</span>)) </span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>q1<span class="ot">&lt;-</span><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.25</span>)) </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>IQ<span class="ot">&lt;-</span>q3<span class="sc">-</span>q1 </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>IQ</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>q3<span class="ot">&lt;-</span><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.75</span>)) </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>q1<span class="ot">&lt;-</span><span class="fu">quantile</span>(resto, <span class="at">probs=</span><span class="fu">c</span>(<span class="fl">0.25</span>)) </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>IQ<span class="ot">&lt;-</span>q3<span class="sc">-</span>q1 </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>IQ</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  75% 
 25.25 </code></pre>
@@ -674,8 +704,8 @@ Note
 </div>
 <p>Um exercício comlementr de análise pod ser a obtenção do coeficiente de varição dos dados (CV), sendo calculado por:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cv<span class="ot">&lt;-</span> <span class="fu">sd</span>(resto)<span class="sc">/</span><span class="fu">mean</span>(resto) </span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>cv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>cv<span class="ot">&lt;-</span> <span class="fu">sd</span>(resto)<span class="sc">/</span><span class="fu">mean</span>(resto) </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>cv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3587287</code></pre>
 </div>
@@ -685,9 +715,9 @@ Note
 <p>Distribuição de estoque para roscagem ao término de caa turno</p>
 <p>A análise dos dados através de uma estatística descritiva, após carregar os dados da tabela corretamente, fornece:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>estoquerosca<span class="ot">&lt;-</span><span class="fu">read_xlsx</span>(<span class="st">"C:/Users/ericb/OneDrive/Documentos/ADE/pesos_roscagem.xlsx"</span>) </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(estoquerosca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl) </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>estoquerosca<span class="ot">&lt;-</span><span class="fu">read_xlsx</span>(<span class="st">"C:/Users/ericb/OneDrive/Documentos/ADE/pesos_roscagem.xlsx"</span>) </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(estoquerosca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Manhã           Tarde           Noite      
  Min.   : 9511   Min.   : 9515   Min.   : 9363  
@@ -700,63 +730,7 @@ Note
 </div>
 <p>Analisando a distribuição dos dados por boxplot, temos:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(estoquerosca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="statr_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Há uma leve tendência de maior estoque médio no turno da tarde, evidenciado pela mediana, e não foram detectadas causas especiais.</p>
-<p>Analisando o histograma dos turnos, temos:</p>
-<p>Turno da Manhã:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Manhã, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Manhã"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Manhã"</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Manhã),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Manhã))</span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Manhã),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Manhã)) </span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="statr_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Turno da tarde:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Tarde, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Tarde"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Tarde"</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Tarde),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Tarde))</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Tarde),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Tarde)) </span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="statr_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Turno da Noite:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Noite, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Noite"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Noite"</span>)</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Noite),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Noite))</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Noite),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Noite)) </span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(estoquerosca)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -765,10 +739,66 @@ Note
 </div>
 </div>
 </div>
+<p>Há uma leve tendência de maior estoque médio no turno da tarde, evidenciado pela mediana, e não foram detectadas causas especiais.</p>
+<p>Analisando o histograma dos turnos, temos:</p>
+<p>Turno da Manhã:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Manhã, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Manhã"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Manhã"</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Manhã),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Manhã))</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Manhã),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Manhã)) </span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Turno da tarde:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Tarde, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Tarde"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Tarde"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Tarde),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Tarde))</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Tarde),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Tarde)) </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Turno da Noite:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>histograma<span class="ot">&lt;-</span> <span class="fu">hist</span>(estoquerosca<span class="sc">$</span>Noite, <span class="at">col =</span> <span class="st">"darkblue"</span>, <span class="at">border =</span> <span class="st">"black"</span>, <span class="at">prob=</span><span class="cn">TRUE</span>,</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab=</span><span class="st">"Turno Noite"</span>, <span class="at">ylab=</span><span class="st">"Peso Para Roscar"</span>, <span class="at">main=</span> <span class="st">"Histograma - Peso Turno Noite"</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>xfit<span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="fu">min</span>(estoquerosca<span class="sc">$</span>Noite),<span class="fu">max</span>(estoquerosca<span class="sc">$</span>Noite))</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>yfit<span class="ot">&lt;-</span><span class="fu">dnorm</span>(xfit,<span class="at">mean=</span><span class="fu">mean</span>(estoquerosca<span class="sc">$</span>Noite),<span class="at">sd=</span><span class="fu">sd</span>(estoquerosca<span class="sc">$</span>Noite)) </span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(xfit, yfit, <span class="at">col=</span><span class="st">"red"</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="statr_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>A análise dos histogrmas indicam grande dispersão dos dados, talvez até mesmo uma mistura de populações (aspecto bimodal), e demanda maior investigação.</p>
 <p>Importante verificar a normalidade dos dados:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Manhã)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Manhã)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -776,7 +806,7 @@ Note
 data:  estoquerosca$Manhã
 W = 0.92037, p-value = 0.1007</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Tarde) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Tarde) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -784,7 +814,7 @@ W = 0.92037, p-value = 0.1007</code></pre>
 data:  estoquerosca$Tarde
 W = 0.89837, p-value = 0.03844</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Noite)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(estoquerosca<span class="sc">$</span>Noite)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test

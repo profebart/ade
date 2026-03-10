@@ -41,7 +41,7 @@ Para se determinar os valores dos percentis, usamos a seguinte regra detalhada n
 
 *Regras para determinação dos Percentis Pk*
 
-Dado os valores de sódio (mg/100g) em 16 marcas diferentes de barras de chocolate , determine os percentis de 10%, 50% e 90% para as amostras coletadas:
+Dado os valores de sódio (mg/100g) em 16 lotes diferentes de soluções salinas , determine os percentis de 10%, 50% e 90% para as amostras coletadas:
 
 ```{r}
 ## Dados coletados:
@@ -56,19 +56,21 @@ Comando para determinar os valores de sódio para P10, P50 e P90 :
 quantile(sodio, probs=c(0.10, 0.50, 0.90))
 ```
 
-Podemos estabelecer uma breve síntese numérica dos dados amostrais, através de sua Estatística Descritiva", como se segue na @fig-estatdesc a seguir:
-
 ## Estatísticas descritivas dos dados
 
-Em um abreve lembrança ao leitor sobre a importância das medidas de posição, os valores de moda, mediana e média devem ser considerados principalmente quando temos assimetria nos dados amostrais, como mostra a @fig-sintesenumestat. Em algumas situações a mediana será m valor mais interessante do que a média, bem como talvez a própria moda.
+Em uma breve lembrança ao leitor sobre a importância das medidas de posição, os valores de moda, mediana e média devem ser considerados principalmente quando temos assimetria nos dados amostrais. Em algumas situações a mediana será um valor mais interessante do que a média, bem como talvez a própria moda.
+
+```{r}
+
+hist(sodio)
+
+```
 
 ### Síntese Numérica Estatística
 
-Para ilustrar um pouco mais o acima exposto, considere uma turma que realizou testes na escrita de textos em sala de aula, com 29 alunos, e que tenham seus desempenhos relativizados com base no número de erros cometidos. A @fig-modamediamediana mostra o resultado, onde podemos notar que a distribuição dos dados altera a importância relativa de se utilizar valores médios para representar a turma como um todo (note que há muitos alunos com desempenhos diferentes da média nas turmas A e C):
+Para ilustrar um pouco mais o acima exposto, considere uma turma que realizou testes na escrita de textos em sala de aula, com 29 alunos, e que tenham seus desempenhos relativizados com base no número de erros cometidos. A figura a seguir mostra os casos onde há perda de simetria da curva gaussiana (normalidade), onde podemos notar que a distribuição dos dados altera a importância relativa de se utilizar valores médios para representar a turma como um todo (note que há diferenças significativs ebtre média e mediana nas distribuições com desvios negativos e positivos):
 
-### Visualização da Moda, Média e da Mediana
-
-Assim, identificar a tendência central de uma variável quantitativa pode não ser suficiente para descrever a sua distribuição, pois dois ou mais grupos podem apresentar a mesma tendência central e serem essencialmente distintos entre si. Para ser possível diferenciar os grupos, é necessário efetuar análises de variabilidade dos dados conjuntamente. A @fig-compmediadesvpad a seguir demonstra o fato com mais propriedade:
+![](images/mediamodamediana.png)
 
 Para se obter uma estatística descritiva básica, utiliza-se o comando "*summary*", fornecendo valores de média, valores mínimo e máximo, mediana, 1ºe 3º quartis:
 
