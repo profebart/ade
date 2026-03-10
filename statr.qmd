@@ -70,6 +70,20 @@ Para ilustrar um pouco mais o acima exposto, considere uma turma que realizou te
 
 Assim, identificar a tendência central de uma variável quantitativa pode não ser suficiente para descrever a sua distribuição, pois dois ou mais grupos podem apresentar a mesma tendência central e serem essencialmente distintos entre si. Para ser possível diferenciar os grupos, é necessário efetuar análises de variabilidade dos dados conjuntamente. A @fig-compmediadesvpad a seguir demonstra o fato com mais propriedade:
 
+Para se obter uma estatística descritiva básica, utiliza-se o comando "*summary*", fornecendo valores de média, valores mínimo e máximo, mediana, 1ºe 3º quartis:
+
+```{r}
+
+summary(sodio)
+```
+
+Como alternativa, pode-se usar o comando "*describe*", do pacote "*psych*":
+
+```{r}
+library(psych)
+describe(sodio)
+```
+
 ### Comparação de Médias e desvios-padrões de 3 distribuições
 
 Note que uma mesma curva-padrão normal com mesma variância igual a 1, possui médias distintas, e que, com variâncias diferentes podem apresentar a mesma média (igual a 5). Neste último caso, o processo com maior variabilidade (variância igual a 4 ou desvio-padrão igual a 2) possui pior desempenho na escala sigma que o anterior (variância unitária).
@@ -114,9 +128,13 @@ $$CV = {{desvio-padrão}\over{Média\ de\ perda\ de\ peso}}$$ $$CV = {{2,1}\over
 
 Considere agora os dados de 16 marcas de chocolates analisadas da @fig-chocolates a seguir:
 
-Informações nutricionais de barras de chocolate
+***Informações nutricionais de barras de chocolate***
 
-As 16 marcas de barras de chocolate são: - mais homogêneas no quesito energia (menor variação do CV); - mais heterogêneas nos quesitos sódio e proteína (maior variação no CV).
+As 16 marcas de barras de chocolate são:
+
+\- mais homogêneas no quesito energia (menor variação do CV);
+
+\- mais heterogêneas nos quesitos sódio e proteína (maior variação no CV).
 
 Note que os nutrientes gordura e proteína são medidos na mesma unidade(%), mas os DP´s não são diretamente comparáveis pois as escalas são diferentes entre si.
 
@@ -130,27 +148,27 @@ A adaptação do Princípio de Pareto, inicialmente desenvolvida pelo sociólogo
 
 Para montar um diagrama ou gráfico de Pareto, devemos:
 
-Identificar qual é o problema a ser estudado.
+1.  Identificar qual é o problema a ser estudado.
 
-Pesquisar e elencar os principais possíveis fatores causadores do problema a ser estudado.
+2.  Pesquisar e elencar os principais possíveis fatores causadores do problema a ser estudado.
 
-Quantificar as grandezas envolvidas (dados quantitativos do problema).
+3.  Quantificar as grandezas envolvidas (dados quantitativos do problema).
 
-Ordená-los por importância decrescente de relevância de forma acumulada, agrupadas por grupos de afinidades ou causas.
+4.  Ordená-los por importância decrescente de relevância de forma acumulada, agrupadas por grupos de afinidades ou causas.
 
-Determinar a magnitude total do problema.
+5.  Determinar a magnitude total do problema.
 
-Identificar os percentuais relativos de cada classe ou grupo.
+6.  Identificar os percentuais relativos de cada classe ou grupo.
 
-Plotar um gráfico de barras de duplo eixo, sendo:
+7.  Plotar um gráfico de barras de duplo eixo, sendo:
 
--- O primeiro eixo o valor da classe individual (altura da coluna).
+    -   -- O primeiro eixo o valor da classe individual (altura da coluna).
 
--- O segundo eixo o valor percentual acumulado das classes (gráfico de linha).
+    -   -- O segundo eixo o valor percentual acumulado das classes (gráfico de linha).
 
-Pareto para as possíveis causas de furo de pneus de caminhão.
+8.  Pareto para as possíveis causas de furo de pneus de caminhão.
 
-Causas para Pneu Furado
+**Causas para Pneu Furado**
 
 A análise de barras indica que a(s) principal(is) causa(s) associada(s) aos furos. Uma análise rápida permite identificar que a principal causa é a ocorrência de Buracos na Estrada, seguida de presença de objetos cortantes nela. Juntas, perfazem mais de 80% dos problemas de furos de pneus...
 
@@ -172,9 +190,9 @@ Dados: 94; 141; 51; 84; 19; 71; 60; 72; 104; 62; 28; 82; 45; 129; 77; 50; 90; 65
 
 Para elaborar o diagrama Stem and Leaf procedemos da seguinte forma:
 
-Em uma primeira coluna colocamos o valor dos decimais das amostras (ou centenas), partindo do menor para o maior valor decimal. No nosso exemplo, a amostra de menor valor em peso é 19 e a maior é 141 gramas. Assim, vamos ordenar em uma coluna valores de 10 a 140.
+1.  Em uma primeira coluna colocamos o valor dos decimais das amostras (ou centenas), partindo do menor para o maior valor decimal. No nosso exemplo, a amostra de menor valor em peso é 19 e a maior é 141 gramas. Assim, vamos ordenar em uma coluna valores de 10 a 140.
 
-Nas demais colunas à direita da primeira, vamos preenchendo com os números das unidades, em ordem de ocorrência, até esgotarem os números da amostra. Por exemplo, o primeiro número da amostragem, 19, estará na linha da dezena 10 e à direita escreve-se o número da unidade 9. Para o Número 60, escreve-se zero ao lado direito do número 60, e assim sucessivamente.
+2.  Nas demais colunas à direita da primeira, vamos preenchendo com os números das unidades, em ordem de ocorrência, até esgotarem os números da amostra. Por exemplo, o primeiro número da amostragem, 19, estará na linha da dezena 10 e à direita escreve-se o número da unidade 9. Para o Número 60, escreve-se zero ao lado direito do número 60, e assim sucessivamente.
 
 Assim, obtemos o diagrama:
 
@@ -364,4 +382,3 @@ shapiro.test(estoquerosca$Noite)
 ```
 
 Notar que o turno 2 apresenta p-valor menor que 0.05, o que sugere não-normalidade dos dados. Para continuar as análises, deve-se investigar a suposição de normalidade para o turno 2, através de nova amostragem com maiores níveis, ou ainda uma possível transformação das medidas (linearização).
-
